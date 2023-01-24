@@ -39,15 +39,6 @@ body {
   white-space: nowrap !important; /* 3 */
 }
 
-/* header{
-  max-height: 55px;
-  min-height: 55px;
-}
-
-footer{
-  max-height: 55px;
-} */
-
 .main-nav {
   display: flex;
   justify-content: space-between;
@@ -396,5 +387,23 @@ footer{
 }
 
 .main_profile{
-  height: calc(100vh - 160px)
+  padding-bottom:20px;
 } 
+
+
+/* .main_profile{
+  height: calc(100vh - 160px);
+}  */
+
+/* .main_home{
+  height: calc(100vh - 160px)
+}  */
+
+/* header{
+  max-height: 55px;
+  min-height: 55px;
+}
+
+footer{
+  max-height: 55px;
+} */

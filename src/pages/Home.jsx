@@ -8,7 +8,7 @@ import {features} from '../data/dataFeatures'
 export default function Home() {
 
   return (
-      <main>
+      <main className='main main_home'>
         <Banner />
         <section className="features">
           <h2 className="sr-only">Features</h2>
