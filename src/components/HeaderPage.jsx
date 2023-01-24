@@ -16,7 +16,7 @@ export default function HeaderPage() {
                 <FaUserCircle />
                     <span>Sign In</span>
                 </Link>
-                <Link class="main-nav-item" href="./index.html">
+                <Link className="main-nav-item" to="/">
                   <FaSignInAlt />
                   <span>Sign Out</span>
                 </Link>
