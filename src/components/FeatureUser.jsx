@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Feature({img, alt, title, text}) {
+export default function FeatureUser({img, alt, title, text}) {
   return (
     <div className="feature-item">
           <img src={img} alt={alt}  className="feature-icon" />
