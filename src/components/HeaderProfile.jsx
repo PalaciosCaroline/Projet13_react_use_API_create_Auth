@@ -7,7 +7,7 @@ export default function HeaderProfile() {
   const nameUser = useSelector((state) => state.user.name);
   const [firstName, setFirstName] = useState(firstNameUser);
   const [name, setName] = useState(nameUser);
-  const [activeNameForm, setActiveNameForm] = useState("");
+  const [activeNameForm, setActiveNameForm] = useState(false);
 
   const onChangeName = (e) => {
     setName(e.target.value)
@@ -16,7 +16,11 @@ export default function HeaderProfile() {
     setFirstName(e.target.value)
   }
 
-    const editNameForm = () => setActiveNameForm(!activeNameForm)
+  const editNameForm = () => setActiveNameForm(!activeNameForm)
+  const handleFormNameSubmit = (e) => {
+    e.preventDefault();
+  }
+
 
   return (
     <header className='header header_profile'>
@@ -24,9 +28,8 @@ export default function HeaderProfile() {
         <h1 className='h1_profile'>Welcome back<br /> { !activeNameForm ? <span>Tony Jarvis!</span> : ''}</h1>
         { activeNameForm ?
                     ( <div className="container_formName">
-                        <form className='formProfile'>
+                        <form className='formProfile'  onSubmit={handleFormNameSubmit}>
                             <div className='box_form'>
-
                                 <div className='box_firstName'>
                                 <div className='box_flexFormName'>
                                     <label htmlFor='firstname'></label>
@@ -42,7 +45,7 @@ export default function HeaderProfile() {
                                     <input type='text' onChange={onChangeName} 
                                     // value={name} 
                                     placeholder={nameUser}/>
-                                    <button className='btnCancel'>Cancel</button>
+                                    <button className='btnCancel' onClick={editNameForm}>Cancel</button>
                                   </div>
                                 </div>
                             </div>
