@@ -55,19 +55,19 @@ body {
   color: #42b983;
 }
 
-/* .box_sign{
+.box_sign{
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 150px;
-} */
+} 
 
 .box_sign svg{
   display: inline-lock;
   margin-right: 5px;
   width: 16px;
-  height:16px;
+  height:16px; 
 }
+
 
 .main-nav-item {
   text-decoration: none;

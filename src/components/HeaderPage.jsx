@@ -1,9 +1,14 @@
 import React from 'react'
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from 'react-router-dom'
 import Logo from './../assets/argentBankLogo.png'
 import { FaUserCircle, FaSignInAlt } from 'react-icons/fa';
 
 export default function HeaderPage() {
+  // const dispatch = useDispatch();
+  const isAuthentificated = useSelector((state) => state.user.isAuthentificated);
+  const firstName = useSelector((state) => state.user.FirstName);
+ 
   return (
     <header>
         <nav className="main-nav">
@@ -14,12 +19,15 @@ export default function HeaderPage() {
            <div className='box_sign'>
                 <Link className="main-nav-item" to="/login">
                 <FaUserCircle />
-                    <span>Sign In</span>
+                {isAuthentificated ? "Jarvis" : (<span>Sign In</span>) }
                 </Link>
-                <Link className="main-nav-item" to="/">
+
+                {isAuthentificated ? 
+                (<Link className="main-nav-item" to="/">
                   <FaSignInAlt />
                   <span>Sign Out</span>
-                </Link>
+                </Link>)
+                : ""}
             </div>
         </nav>
     </header>
