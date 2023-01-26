@@ -1,0 +1,179 @@
+swagger: '2.0'
+info:
+  title: Bank Argent API documentation
+  description: Contains all available API endpoints of 
+functionality for transactions
+  version: '1.0.0'
+  termsOfService: 'http://swagger.io/terms/'
+host: localhost:3001
+basePath: /api/v1
+schemes:
+  - http
+paths:
+  /user/transactions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User Transactions Module
+      summary: User Transactions
+      description: API to display the transactions list of the current month, display one of them, and add, modify or delete information about a transaction
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: User transactions retrieved successfully
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Transaction" 
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+          
+  /user/transactions/{transactionId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Module Single transaction
+      summary: User Single Transaction
+      description: API to display one of transaction by Id in list of transactions of the current month
+      parameters:
+        - in: path
+          name: transactionId
+          description: ID of transaction to fetch
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User transaction retrieved successfully
+          schema:
+            $ref: "#/definitions/Transaction"
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Module Single transaction
+      summary: User Single Transaction API
+      description: API for add information about a transaction by Id in the list of transactions of current month
+      operationId: CreateTransactionInfos
+      parameters:
+        - in: path
+          name: transactionId
+          description: ID of transaction to fetch
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Information Payload to add of this transaction 
+          required: true
+          schema:
+            $ref: "#/definitions/Transaction"
+      responses:
+        '200':
+          description: TransactionInfos patched successfully
+          schema:
+             $ref: "#/definitions/Transaction"
+        '400':
+          description: Invalid Fields
+        '404' : 
+          description: Invalid, this transaction no exist
+        '500':
+          description: Internal server error - this request cannot be served. 
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Module Single transaction
+      summary: User Single Transaction API
+      description: API for updating (change or delete) information about a transaction by Id in the list of transactions of current month
+      parameters:
+        - in: path
+          name: transactionId
+          description: ID of transaction to fetch
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: new information to change of this transaction Payload
+          required: true
+          schema:
+            $ref: "#/definitions/Transaction"
+      responses:
+        '200':
+          description: TransactionInfos patched successfully
+          schema:
+            $ref: "#/definitions/Transaction"
+        '400':
+          description: Invalid Fields
+        '404' : 
+          description: Invalid, this transaction no exist
+        '500':
+          description: Internal server error - this request cannot be served.
+          
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    
+definitions:
+  Transaction:
+      type: object
+      properties:
+        id:
+          type: string
+          description: transaction's ID
+        date:
+          type: string
+          description: transaction's date
+        description:
+          type: string
+          description: transaction's description
+        amount:
+          type: integer
+          description: transaction's amount
+        balance:
+          type: integer
+          description: account balance after transaction
+        transactionInfos:
+          type: object
+          properties: 
+            category:
+              type: string
+              description: transaction's category
+              example: Restaurant
+            comment:
+              type: string
+              description: transaction's comment
+        
+              
