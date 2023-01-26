@@ -3,10 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    firstName: "",
-	name:"",
+    firstName: 'JarvisT',
+	  name:'Toto',
 	// isAuthentificated: false,
-	isAuthentificated: true,
+	  isAuthentificated: true,
     token: "",
   },
   reducers: {

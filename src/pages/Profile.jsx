@@ -1,26 +1,16 @@
 import React from 'react'
 import HeaderProfile from '../components/HeaderProfile'
 import Account from '../components/Account'
+import {dataAccount} from './../data/dataMock'
+import { redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Profile() {
+  const isAuthentificated = useSelector((state) => state.user.isAuthentificated);
 
-  const dataAccount = [
-    {
-      title: 'Argent Bank Checking (x8349)',
-      amount: '$2,082.79',
-      text: 'Available Balance'
-    },
-    {
-      title: 'Argent Bank Savings (x6712)',
-      amount: '$10,928.42',
-      text: 'Available Balance'
-    },
-    {
-      title: 'Argent Bank Credit Card (x8349)',
-      amount: '$184.30',
-      text: 'Current Balance'
-    }
-  ]
+  if (!isAuthentificated) {
+      return redirect("/login");
+  }
 
   return (
     <main className="main bg-dark main_profile">

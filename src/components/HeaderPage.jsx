@@ -7,8 +7,8 @@ import { FaUserCircle, FaSignInAlt } from 'react-icons/fa';
 export default function HeaderPage() {
   // const dispatch = useDispatch();
   const isAuthentificated = useSelector((state) => state.user.isAuthentificated);
-  const firstName = useSelector((state) => state.user.FirstName);
- 
+  const firstName = useSelector((state) => state.user.firstName);
+
   return (
     <header>
         <nav className="main-nav">
@@ -19,7 +19,7 @@ export default function HeaderPage() {
            <div className='box_sign'>
                 <Link className="main-nav-item" to="/login">
                 <FaUserCircle />
-                {isAuthentificated ? "Jarvis" : (<span>Sign In</span>) }
+                {isAuthentificated ? firstName : (<span>Sign In</span>) }
                 </Link>
 
                 {isAuthentificated ? 
