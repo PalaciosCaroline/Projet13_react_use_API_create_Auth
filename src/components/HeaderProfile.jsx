@@ -1,27 +1,57 @@
 import React, {useState} from 'react'
 import { useDispatch ,useSelector } from "react-redux";
+import { setUserFirstName, setUserLastName} from './../store/user.slice';
 
 
 export default function HeaderProfile() {
-  const firstNameUser = useSelector((state) => state.user.firstName);
-  const nameUser = useSelector((state) => state.user.name);
-  const [firstName, setFirstName] = useState(firstNameUser);
-  const [name, setName] = useState(nameUser);
+  const dispatch = useDispatch();
+  const userFirstName = useSelector((state) => state.user.userFirstName);
+  const userLastName = useSelector((state) => state.user.userLastName);
+  const token = useSelector((state) => state.user.token);
+  const [firstName, setFirstName] = useState(userFirstName);
+  const [lastName, setLastName] = useState(userLastName);
   const [activeNameForm, setActiveNameForm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const onChangeName = (e) => {
-    setName(e.target.value)
+    setLastName(e.target.value)
   }
   const onChangeFirstName = (e) => {
     setFirstName(e.target.value)
   }
 
   const editNameForm = () => setActiveNameForm(!activeNameForm)
-  const handleFormNameSubmit = (e) => {
+
+  const handleFormNameSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('http://localhost:3001/api/v1/user/profile', {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({firstName , lastName })
+      });
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      const data = await response.json();
+      const res = await data.body;
+      dispatch(setUserFirstName(res.firstName))
+      dispatch(setUserLastName(res.lastName))
+      dispatch(setActiveNameForm(false))
+      console.log(res)
+    } catch (error) {
+      setError(error)
+    } finally {
+      setIsLoading(false);
+    }
   }
-
-
+  
   return (
     <header className='header header_profile'>
 
@@ -31,21 +61,19 @@ export default function HeaderProfile() {
                         <form className='formProfile'  onSubmit={handleFormNameSubmit}>
                             <div className='box_form'>
                                 <div className='box_firstName'>
-                                <div className='box_flexFormName'>
-                                    <label htmlFor='firstname'></label>
-                                    <input type='text' onChange={onChangeFirstName} 
-                                    // value={firstName} 
-                                    placeholder={firstNameUser}/>
-                                    <button  className='btnSave'>Save</button>
+                                  <div className='box_flexFormName'>
+                                      <label htmlFor='firstname'></label>
+                                      <input type='text' onChange={onChangeFirstName} 
+                                      placeholder={userFirstName}/>
+                                      <button  className='btnSave' disabled={isLoading}>Save</button>
                                   </div>
                                 </div>
                                 <div className='box_Name'>
                                   <div className='box_flexFormName'>
                                     <label htmlFor='name'></label>
                                     <input type='text' onChange={onChangeName} 
-                                    // value={name} 
-                                    placeholder={nameUser}/>
-                                    <button className='btnCancel' onClick={editNameForm}>Cancel</button>
+                                    placeholder={userLastName}/>
+                                    <button className='btnCancel' onClick={editNameForm} disabled={isLoading}>Cancel</button>
                                   </div>
                                 </div>
                             </div>

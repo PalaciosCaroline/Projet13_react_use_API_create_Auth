@@ -2,9 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   token: null,
-  firstName: 'Tata!',
-  lastName: '',
-  isAuthentificated: true,
+  userFirstName: '',
+  userLastName: '',
+  isAuthentificated: false,
 };
 
 const userSlice = createSlice({
@@ -15,24 +15,24 @@ const userSlice = createSlice({
       state.token = action.payload;
     },
     setUserFirstName: (state, action) => {
-      state.firstName = action.payload;
+      state.userFirstName = action.payload;
     },
-    setUserName: (state, action) => {
-      state.name = action.payload;
+    setUserLastName: (state, action) => {
+      state.userLastName = action.payload;
     },
     setIsAuthentificated: (state, action) => {
-      state.name = action.payload;
+      state.isAuthentificated = action.payload;
     },
     logout: (state) => {
       state.token = null;
-      state.firstName = '';
-      state.lastName = '';
+      state.userFirstName = '';
+      state.userLastName = '';
       state.isAuthentificated = false;
     },
   },
 });
 
-export const { setToken, setUserFirstName, setUserName, logout, setIsAuthentificated } = userSlice.actions;
+export const { setToken, setUserFirstName, setUserLastName, logout, setIsAuthentificated } = userSlice.actions;
 
 export default userSlice.reducer;
 

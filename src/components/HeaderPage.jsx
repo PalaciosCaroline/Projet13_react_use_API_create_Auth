@@ -11,26 +11,12 @@ import { setUserFirstName, setUserName, setToken,logout, setIsAuthentificated } 
 export default function HeaderPage() {
   const dispatch = useDispatch();
   const isAuthentificated = useSelector((state) => state.user.isAuthentificated);
-  const firstName = useSelector((state) => state.user.firstName);
-  // const logout = useSelector((state) => state.user.Logout);
-    // const history = useHistory(); 
-
-    const token = useSelector((state) => state.user.token);
- 
-    // const logoutUser = () => {
-    //   dispatch(setUserFirstName(""));
-    //   dispatch(setUserName(""));
-    //   dispatch(setToken(""));
-    //   dispatch(setIsAuthentificated(''));
-    //   // dispatch(logout())
-    // };
+  const userFirstName = useSelector((state) => state.user.userFirstName); 
 
     const handleLogout = () => {
       dispatch(logout())
       redirect('/')
     }
-
-
 
   return (
     <header>
@@ -43,7 +29,7 @@ export default function HeaderPage() {
                 
               <FaUserCircle />
                 {isAuthentificated ? 
-                 (<Link className="main-nav-item" to="/profile">{firstName}</Link>) :
+                 (<Link className="main-nav-item" to="/profile">{userFirstName}</Link>) :
                  (<Link className="main-nav-item" to="/login" ><span>Sign In</span></Link>)
                 }
                 {isAuthentificated && 
