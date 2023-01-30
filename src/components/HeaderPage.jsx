@@ -6,12 +6,12 @@ import { Link, redirect } from 'react-router-dom'
 import Logo from './../assets/argentBankLogo.png'
 import { FaUserCircle, FaSignInAlt } from 'react-icons/fa';
 // import LogoutUser from '../utils/logout';
-import { setUserFirstName, setUserName, setToken,logout, setIsAuthentificated } from '../store/user.slice';
+import { setUserFirstName, setUserLastName, setToken,logout, setIsAuthentificated } from '../store/user.slice';
 
-export default function HeaderPage() {
+export default function HeaderPage({userFirstName}) {
   const dispatch = useDispatch();
   const isAuthentificated = useSelector((state) => state.user.isAuthentificated);
-  const userFirstName = useSelector((state) => state.user.userFirstName); 
+  // const userFirstName = useSelector((state) => state.user.userFirstName); 
 
     const handleLogout = () => {
       dispatch(logout())

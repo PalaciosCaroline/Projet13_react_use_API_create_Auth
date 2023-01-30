@@ -15,6 +15,7 @@ export default function Profile() {
   }
   }, [isAuthentificated])
 
+
   return (isAuthentificated &&
     <main className="main bg-dark main_profile">
       <HeaderProfile />

@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import { useDispatch ,useSelector } from "react-redux";
+import React, {useState, useEffect } from 'react'
+import { useDispatch ,useSelector} from "react-redux";
 import { setUserFirstName, setUserLastName} from './../store/user.slice';
 
 
@@ -22,6 +22,35 @@ export default function HeaderProfile() {
   }
 
   const editNameForm = () => setActiveNameForm(!activeNameForm)
+
+useEffect(() => {
+  async function fetchData() {
+    setIsLoading(true);
+      setError(null);
+      try{
+      const response = await fetch('http://localhost:3001/api/v1/user/profile', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },  
+        });
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        const data = await response.json();
+       const res = await data.body;
+       console.log(res)
+       setUserFirstName(res.firstName)
+       console.log(res.firstName)
+       setUserLastName(res.lastName)
+    } catch (error) {
+      setError(error)
+    }
+  }
+  fetchData()
+}, [])
+
 
   const handleFormNameSubmit = async (e) => {
     e.preventDefault();
@@ -55,7 +84,7 @@ export default function HeaderProfile() {
   return (
     <header className='header header_profile'>
 
-        <h1 className='h1_profile'>Welcome back<br /> { !activeNameForm ? <span>Tony Jarvis!</span> : ''}</h1>
+        <h1 className='h1_profile'>Welcome back<br /> { !activeNameForm ? <span>{userFirstName} {userLastName}!</span> : ''}</h1>
         { activeNameForm ?
                     ( <div className="container_formName">
                         <form className='formProfile'  onSubmit={handleFormNameSubmit}>
