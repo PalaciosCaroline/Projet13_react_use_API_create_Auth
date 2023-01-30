@@ -467,13 +467,13 @@ body {
 } 
 
 
-.main_profile{
+/* .main_profile{
   height: calc(100vh - 160px);
 }  
 
 .main_home{
   height: calc(100vh - 160px)
-}  
+}   */
 
 /* header{
   max-height: 55px;

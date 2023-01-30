@@ -1,22 +1,22 @@
 import React, {useState, useEffect} from 'react'
 import { Link, redirect ,  useNavigate} from 'react-router-dom'
-import { setToken, setIsAuthentificated, setUserFirstName, setUserLastName} from './../store/user.slice';
+import { setToken, setIsAuthentificated, setUserFirstName, setUserLastName, setErrorLogin} from './../store/user.slice';
 import { useDispatch, useSelector } from 'react-redux';
-import { AES, CryptoJS } from 'crypto-js'
+import { AES, CryptoJS, enc } from 'crypto-js'
 // import { setUserFirstName, setUserName } from '../store/user.slice';
 
 export default function Form() {
   const dispatch = useDispatch();
   const navigate =  useNavigate();
-  const token = useSelector((state) => state.user.token);
+  // const token = useSelector((state) => state.user.token);
   const isAuthentificated = useSelector((state) => state.user.isAuthentificated);
+  const errorLogin = useSelector((state) => state.user.errorLogin);
   const [rememberMe, setRememberMe] = useState(false);
   // const userFirstName = useSelector((state) => state.user.userFirstName);
   // const userLastName = useSelector((state) => state.user.userLastName);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
 
 
   // useEffect(() => {
@@ -49,11 +49,9 @@ export default function Form() {
   // };
  
   
-
-  const handleSubmit = async (event) => {
+  const handleFormLogin = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    setError(null);
     try {
       const response = await fetch('http://localhost:3001/api/v1/user/login', {
         method: 'POST',
@@ -67,7 +65,7 @@ export default function Form() {
       }
       const data = await response.json();
       const res = await data.body;
-      if (res.token) {
+      if (res) {
         // localStorage.setItem('token', res.token);
         if (rememberMe) {
           const ciphertext = AES.encrypt(email, 'g5yFO1236Dx-ilp').toString();
@@ -83,21 +81,23 @@ export default function Form() {
       dispatch(setToken(res.token))
       console.log(res.token)
       dispatch(setIsAuthentificated(true))
- 
-        // dispatch(setUserFirstName('Tata!!!!'))
-      
       navigate('/profile');
     } catch (error) {
-      setError(error);
-     
+      dispatch(setErrorLogin(error))
     } finally {
       setIsLoading(false);
     }
   };
- 
 
+  // useEffect(() => {
+  //   if (isAuthentificated) {
+  //     navigate('/profile')
+  //   }
+  // }, [isAuthentificated, navigate])
+
+ 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleFormLogin}>
           <div className="input-wrapper">
             <label htmlFor="email">Username</label
             ><input type="text" id="email" value={email} onChange={e => setEmail(e.target.value)} autoComplete='email'/>
@@ -107,8 +107,6 @@ export default function Form() {
             ><input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} autoComplete='password'/>
           </div>
           <div className="input-remember">
-            {/* <input type="checkbox" id="remember-me" />
-            <label htmlFor="remember-me">Remember me</label> */}
             <label htmlFor="remember-me">
               <input type="checkbox" id="remember-me"  checked={rememberMe} 
               onChange={e => setRememberMe(e.target.checked)} 
@@ -118,7 +116,7 @@ export default function Form() {
 
           </div>
           <button type="submit" className="sign-in-button"  disabled={isLoading}>Sign In</button>
-          {error && <p>UserName or Password is incorrect</p>}
+          {errorLogin && <p>UserName or Password is incorrect</p>}
     </form>
   )
 }

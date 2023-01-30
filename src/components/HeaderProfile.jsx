@@ -1,7 +1,7 @@
 import React, {useState, useEffect } from 'react'
 import { useDispatch ,useSelector} from "react-redux";
 import { setUserFirstName, setUserLastName} from './../store/user.slice';
-
+import { getDataIdentityUser } from '../hook/getDataUserIdentity';
 
 export default function HeaderProfile() {
   const dispatch = useDispatch();
@@ -14,48 +14,36 @@ export default function HeaderProfile() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const onChangeName = (e) => {
-    setLastName(e.target.value)
+  const onChangeLastName = (e) => {
+    // if(!e.target.value){
+    //   e.target.value = userLastName;
+    // }
+    setLastName(e.target.value) 
   }
+
   const onChangeFirstName = (e) => {
     setFirstName(e.target.value)
   }
 
   const editNameForm = () => setActiveNameForm(!activeNameForm)
 
-useEffect(() => {
-  async function fetchData() {
-    setIsLoading(true);
-      setError(null);
-      try{
-      const response = await fetch('http://localhost:3001/api/v1/user/profile', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },  
-        });
-        if (!response.ok) {
-          throw new Error(response.statusText);
-        }
-        const data = await response.json();
-       const res = await data.body;
-       console.log(res)
-       setUserFirstName(res.firstName)
-       console.log(res.firstName)
-       setUserLastName(res.lastName)
-    } catch (error) {
-      setError(error)
-    }
-  }
-  fetchData()
-}, [])
+  useEffect(() => {
+    getDataIdentityUser(setIsLoading,setError, token, dispatch)  
+  }, [dispatch, token])
 
 
-  const handleFormNameSubmit = async (e) => {
+  const handleUpdateIdentityUser = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
+    // let firstNameInput = document.getElementById('inputFirstName').value;
+    //   if (!firstNameInput) {
+    //   setFirstName(userFirstName);
+    // }
+    // let lastNameInput = document.getElementById('inputLastName').value;
+    //   if (!lastNameInput) {
+    //     setLastName(userLastName);
+    //   }
     try {
       const response = await fetch('http://localhost:3001/api/v1/user/profile', {
         method: 'PUT',
@@ -73,7 +61,7 @@ useEffect(() => {
       dispatch(setUserFirstName(res.firstName))
       dispatch(setUserLastName(res.lastName))
       dispatch(setActiveNameForm(false))
-      console.log(res)
+      console.log(data)
     } catch (error) {
       setError(error)
     } finally {
@@ -83,26 +71,25 @@ useEffect(() => {
   
   return (
     <header className='header header_profile'>
-
         <h1 className='h1_profile'>Welcome back<br /> { !activeNameForm ? <span>{userFirstName} {userLastName}!</span> : ''}</h1>
         { activeNameForm ?
                     ( <div className="container_formName">
-                        <form className='formProfile'  onSubmit={handleFormNameSubmit}>
+                        <form className='formProfile'  onSubmit={handleUpdateIdentityUser}>
                             <div className='box_form'>
                                 <div className='box_firstName'>
                                   <div className='box_flexFormName'>
                                       <label htmlFor='firstname'></label>
-                                      <input type='text' onChange={onChangeFirstName} 
-                                      placeholder={userFirstName}/>
+                                      <input id="inputFirstName" type='text' onChange={onChangeFirstName}
+                                      placeholder={userFirstName} required/>
                                       <button  className='btnSave' disabled={isLoading}>Save</button>
                                   </div>
                                 </div>
                                 <div className='box_Name'>
                                   <div className='box_flexFormName'>
                                     <label htmlFor='name'></label>
-                                    <input type='text' onChange={onChangeName} 
-                                    placeholder={userLastName}/>
-                                    <button className='btnCancel' onClick={editNameForm} disabled={isLoading}>Cancel</button>
+                                    <input id="inputLastName" type='text' onChange={onChangeLastName} 
+                                    placeholder={userLastName} required/>
+                                    <button className='btnCancel' onClick={editNameForm} disabled={isLoading} >Cancel</button>
                                   </div>
                                 </div>
                             </div>

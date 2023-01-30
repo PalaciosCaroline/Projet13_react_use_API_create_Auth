@@ -5,6 +5,8 @@ const initialState = {
   userFirstName: '',
   userLastName: '',
   isAuthentificated: false,
+  errorLogin: '',
+  errorUpdateIdentity: '',
 };
 
 const userSlice = createSlice({
@@ -29,10 +31,19 @@ const userSlice = createSlice({
       state.userLastName = '';
       state.isAuthentificated = false;
     },
+    setErrorUpdateIdentity: (state, action) => {
+      state.errorUpdateIdentity = action.payload;
+    },
+    setErrorLogin: (state, action) => {
+      state.errorLogin = action.payload;
+    },
+    setIsLoadingLogin: (state, action) => {
+      state.isloadingLogin = action.payload;
+    },
   },
 });
 
-export const { setToken, setUserFirstName, setUserLastName, logout, setIsAuthentificated } = userSlice.actions;
+export const { setToken, setUserFirstName, setUserLastName, setIsAuthentificated, logout, setErrorLogin, setErrorUpdateIdentity, setIsLoadingLogin } = userSlice.actions;
 
 export default userSlice.reducer;
 
