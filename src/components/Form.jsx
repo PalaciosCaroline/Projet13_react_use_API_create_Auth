@@ -34,18 +34,18 @@ export default function Form() {
 
 
   // window.onload = function() {
-  //   if (localStorage.getItem("email") && localStorage.getItem("password")) {
-  //     var passwordKey = "g5yFO1236Dx-ilp";
-  //     var ciphertext = localStorage.getItem("email");
-  //     var plaintext = CryptoJS.AES.decrypt(ciphertext, passwordKey).toString(CryptoJS.enc.Utf8);
-  //     var email = JSON.parse(plaintext);
-  //     var ciphertext2 = localStorage.getItem("password");
-  //     var plaintext2 = CryptoJS.AES.decrypt(ciphertext2, passwordKey).toString(CryptoJS.enc.Utf8);
-  //     var password = JSON.parse(plaintext2);
-  //     document.getElementById("email").value = email;
-  //     document.getElementById("password").value = password;
-  //     document.getElementById("remember-me").checked = true;
-  //   }
+    // if (localStorage.getItem("email") && localStorage.getItem("password")) {
+    //   const passwordKey = "g5yFO1236Dx-ilp";
+    //   const ciphertext = localStorage.getItem("email");
+    //   const plaintext = CryptoJS.AES.decrypt(ciphertext, passwordKey).toString(CryptoJS.enc.Utf8);
+    //   const email = JSON.parse(plaintext);
+    //   const ciphertext2 = localStorage.getItem("password");
+    //   const plaintext2 = CryptoJS.AES.decrypt(ciphertext2, passwordKey).toString(CryptoJS.enc.Utf8);
+    //   const password = JSON.parse(plaintext2);
+    //   document.getElementById("email").value = email;
+    //   document.getElementById("password").value = password;
+    //   document.getElementById("remember-me").checked = true;
+    // }
   // };
  
   
