@@ -2,8 +2,11 @@ import React, {useState, useEffect} from 'react'
 import { Link, redirect ,  useNavigate} from 'react-router-dom'
 import { setToken, setIsAuthentificated, setUserFirstName, setUserLastName, setErrorLogin} from './../store/user.slice';
 import { useDispatch, useSelector } from 'react-redux';
-import { AES, CryptoJS, enc } from 'crypto-js'
+import { AES, enc } from 'crypto-js'
 // import { setUserFirstName, setUserName } from '../store/user.slice';
+
+const KEY = "g5yFO1236Dxilp";
+
 
 export default function Form() {
   const dispatch = useDispatch();
@@ -18,36 +21,33 @@ export default function Form() {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    const encryptedEmail = localStorage.getItem("email");
+    const encryptedPassword = localStorage.getItem("password");
+    if (encryptedEmail && encryptedPassword) {
+      setEmail(AES.decrypt(encryptedEmail, KEY).toString(enc.Utf8));
+      setPassword(AES.decrypt(encryptedPassword, KEY).toString(enc.Utf8));
+      setRememberMe(true);
+    }
+  }, []);
 
-  // useEffect(() => {
-  //   const emailLocal = localStorage.getItem('email');
-  //   const passwordLocal = localStorage.getItem('password');
-  //   if (emailLocal && passwordLocal) {
-  //     const decryptedemail = AES.decrypt(emailLocal,"g5yFO1236Dx-ilp" ).toString(CryptoJS.enc.Utf8);
-  //     const { email } = JSON.parse(decryptedemail);
-  //     const decryptedPassword = AES.decrypt(passwordLocal,"g5yFO1236Dx-ilp" ).toString(CryptoJS.enc.Utf8);
-  //     const { password } = JSON.parse(decryptedPassword);
-  //     setEmail(email);
-  //     setPassword(password);
-  //   }
-  // }, []);
+  const handleRememberMe = (event) => {
+    setRememberMe(event.target.checked);
+    if (event.target.checked) {
+      localStorage.setItem(
+        "email",
+        AES.encrypt(email, KEY).toString()
+      );
+      localStorage.setItem(
+        "password",
+        AES.encrypt(password, KEY).toString()
+      );
+    } else {
+      localStorage.removeItem("email");
+      localStorage.removeItem("password");
+    }
+  };
 
-
-  // window.onload = function() {
-    // if (localStorage.getItem("email") && localStorage.getItem("password")) {
-    //   const passwordKey = "g5yFO1236Dx-ilp";
-    //   const ciphertext = localStorage.getItem("email");
-    //   const plaintext = CryptoJS.AES.decrypt(ciphertext, passwordKey).toString(CryptoJS.enc.Utf8);
-    //   const email = JSON.parse(plaintext);
-    //   const ciphertext2 = localStorage.getItem("password");
-    //   const plaintext2 = CryptoJS.AES.decrypt(ciphertext2, passwordKey).toString(CryptoJS.enc.Utf8);
-    //   const password = JSON.parse(plaintext2);
-    //   document.getElementById("email").value = email;
-    //   document.getElementById("password").value = password;
-    //   document.getElementById("remember-me").checked = true;
-    // }
-  // };
- 
   
   const handleFormLogin = async (event) => {
     event.preventDefault();
@@ -65,19 +65,6 @@ export default function Form() {
       }
       const data = await response.json();
       const res = await data.body;
-      if (res) {
-        // localStorage.setItem('token', res.token);
-        if (rememberMe) {
-          const ciphertext = AES.encrypt(email, 'g5yFO1236Dx-ilp').toString();
-          localStorage.setItem('email', ciphertext);
-          const ciphertext2 = AES.encrypt(password, 'g5yFO1236Dx-ilp').toString();
-          localStorage.setItem('password', ciphertext2);
-        } else {
-          if(localStorage.getItem("email") && localStorage.getItem("password"))
-          localStorage.removeItem('email');
-          localStorage.removeItem('password');
-        }
-      }
       dispatch(setToken(res.token))
       console.log(res.token)
       dispatch(setIsAuthentificated(true))
@@ -109,7 +96,8 @@ export default function Form() {
           <div className="input-remember">
             <label htmlFor="remember-me">
               <input type="checkbox" id="remember-me"  checked={rememberMe} 
-              onChange={e => setRememberMe(e.target.checked)} 
+              // onChange={e => setRememberMe(e.target.checked)} 
+              onChange={handleRememberMe} 
               />
                 Remember me
             </label>

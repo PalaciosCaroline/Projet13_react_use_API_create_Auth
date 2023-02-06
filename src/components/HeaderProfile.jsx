@@ -14,23 +14,15 @@ export default function HeaderProfile() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const onChangeLastName = (e) => {
-    // if(!e.target.value){
-    //   e.target.value = userLastName;
-    // }
-    setLastName(e.target.value) 
-  }
-
-  const onChangeFirstName = (e) => {
-    setFirstName(e.target.value)
-  }
-
   const editNameForm = () => setActiveNameForm(!activeNameForm)
 
   useEffect(() => {
     getDataIdentityUser(setIsLoading,setError, token, dispatch)  
+    setFirstName(userFirstName)
+    setLastName(userLastName)
   }, [dispatch, token])
 
+  console.log(userFirstName)
 
   const handleUpdateIdentityUser = async (e) => {
     e.preventDefault();
@@ -79,16 +71,20 @@ export default function HeaderProfile() {
                                 <div className='box_firstName'>
                                   <div className='box_flexFormName'>
                                       <label htmlFor='firstname'></label>
-                                      <input id="inputFirstName" type='text' onChange={onChangeFirstName}
-                                      placeholder={userFirstName} required/>
+                                      {/* <input id="inputFirstName" type='text' onChange={onChangeFirstName}
+                                      placeholder={userFirstName} required/> */}
+                                      <input id="inputFirstName" type='text' onChange={e => setFirstName(e.target.value)} value={firstName}
+                                      placeholder={userFirstName} />
                                       <button  className='btnSave' disabled={isLoading}>Save</button>
                                   </div>
                                 </div>
                                 <div className='box_Name'>
                                   <div className='box_flexFormName'>
                                     <label htmlFor='name'></label>
-                                    <input id="inputLastName" type='text' onChange={onChangeLastName} 
-                                    placeholder={userLastName} required/>
+                                    {/* <input id="inputLastName" type='text' onChange={onChangeLastName} 
+                                    placeholder={userLastName} required/> */}
+                                    <input id="inputLastName" type='text' onChange={e => setLastName(e.target.value)} value={lastName}
+                                    placeholder={userLastName} />
                                     <button className='btnCancel' onClick={editNameForm} disabled={isLoading} >Cancel</button>
                                   </div>
                                 </div>
