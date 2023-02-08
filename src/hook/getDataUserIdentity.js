@@ -16,7 +16,6 @@ export async function getDataIdentityUser(setIsLoading,setError,token,dispatch )
         }
         const data = await response.json();
       const res = await data.body;
-      console.log(res)
       dispatch(setUserFirstName(res.firstName))
       console.log(res.firstName)
       dispatch(setUserLastName(res.lastName))

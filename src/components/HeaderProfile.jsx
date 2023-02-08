@@ -18,11 +18,12 @@ export default function HeaderProfile() {
 
   useEffect(() => {
     getDataIdentityUser(setIsLoading,setError, token, dispatch)  
-    setFirstName(userFirstName)
-    setLastName(userLastName)
   }, [dispatch, token])
 
-  console.log(userFirstName)
+  useEffect(() => {
+    setFirstName(userFirstName)
+    setLastName(userLastName)
+  }, [userFirstName, userLastName])
 
   const handleUpdateIdentityUser = async (e) => {
     e.preventDefault();
@@ -74,7 +75,8 @@ export default function HeaderProfile() {
                                       {/* <input id="inputFirstName" type='text' onChange={onChangeFirstName}
                                       placeholder={userFirstName} required/> */}
                                       <input id="inputFirstName" type='text' onChange={e => setFirstName(e.target.value)} value={firstName}
-                                      placeholder={userFirstName} />
+                                      // placeholder={userFirstName} 
+                                      />
                                       <button  className='btnSave' disabled={isLoading}>Save</button>
                                   </div>
                                 </div>
@@ -84,7 +86,8 @@ export default function HeaderProfile() {
                                     {/* <input id="inputLastName" type='text' onChange={onChangeLastName} 
                                     placeholder={userLastName} required/> */}
                                     <input id="inputLastName" type='text' onChange={e => setLastName(e.target.value)} value={lastName}
-                                    placeholder={userLastName} />
+                                    // placeholder={userLastName} 
+                                    />
                                     <button className='btnCancel' onClick={editNameForm} disabled={isLoading} >Cancel</button>
                                   </div>
                                 </div>
