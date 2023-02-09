@@ -2,6 +2,7 @@ import React, {useState, useEffect } from 'react'
 import { useDispatch ,useSelector} from "react-redux";
 import { setUserFirstName, setUserLastName} from './../store/user.slice';
 import { getDataIdentityUser } from '../hook/getDataUserIdentity';
+import {updateDataUserIdentity} from './../hook/updateDataUserIdentity'
 
 export default function HeaderProfile() {
   const dispatch = useDispatch();
@@ -28,35 +29,31 @@ export default function HeaderProfile() {
     setLastName(userLastName)
   }, [userFirstName, userLastName])
 
-
-  const handleFirstNameChange = (event) => {
-    const input = event.target.value;
-    const regex = /^[a-zA-Z-' ]{1,40}$/;
-    if (!regex.test(input) || input.length > 40) {
-      setErrorName('Veuillez rentrer un prénom valide');
-      return;
-    }
-    setErrorName('');
-    setFirstName(input);
+  const handleFocus = (event) => {
+    event.target.value = '';
   };
 
-  const handleLastNameChange = (event) => {
+  const handleNameChange = (setName, errorMessage) => event => {
     const input = event.target.value;
-    const regex = /^[a-zA-Z-' ]{1,40}$/;
-    if (!regex.test(input) || input.length > 40) {
-      setErrorName('Veuillez rentrer un nom valide');
+    const regex = /^[a-zA-Z-' ]{0,40}?$/;
+    if (!regex.test(input)) {
+      setErrorName(errorMessage);
       return;
+    } else if (regex.test(input) && input.length > 0) {
+      setErrorName('');
+      setName(input);
     }
-    setErrorName('');
-    setLastName(input);
   };
 
+  const handleFirstNameChange = handleNameChange(setFirstName, 'Veuillez rentrer un prénom valide');
+  const handleLastNameChange = handleNameChange(setLastName, 'Veuillez rentrer un nom valide');
 
   const handleUpdateIdentityUser = async (e) => {
     e.preventDefault();
+    if(!setErrorName) return;
     setIsLoading(true);
     setError(null);
-    if(!setErrorName) return;
+    updateDataUserIdentity(setIsLoading,setError, token, firstName, lastName, dispatch) 
     // let firstNameInput = document.getElementById('inputFirstName').value;
     //   if (!firstNameInput) {
     //   setFirstName(userFirstName);
@@ -65,28 +62,31 @@ export default function HeaderProfile() {
     //   if (!lastNameInput) {
     //     setLastName(userLastName);
     //   }
-    try {
-      const response = await fetch('http://localhost:3001/api/v1/user/profile', {
-        method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({firstName , lastName })
-      });
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-      const data = await response.json();
-      const res = await data.body;
-      dispatch(setUserFirstName(res.firstName))
-      dispatch(setUserLastName(res.lastName))
-      dispatch(setActiveNameForm(false))
-      console.log(data)
-    } catch (error) {
-      setError(error)
-    } finally {
-      setIsLoading(false);
+    // try {
+    //   const response = await fetch('http://localhost:3001/api/v1/user/profile', {
+    //     method: 'PUT',
+    //     headers: {
+    //       'Authorization': `Bearer ${token}`,
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({firstName , lastName })
+    //   });
+    //   if (!response.ok) {
+    //     throw new Error(response.statusText);
+    //   }
+    //   const data = await response.json();
+    //   const res = await data.body;
+    //   dispatch(setUserFirstName(res.firstName))
+    //   dispatch(setUserLastName(res.lastName))
+    //   dispatch(setActiveNameForm(false))
+    //   console.log(data)
+    // } catch (error) {
+    //   setError(error)
+    // } finally {
+    //   setIsLoading(false);
+    // }
+    if (!error) {
+      setActiveNameForm(false)
     }
   }
   
@@ -100,14 +100,21 @@ export default function HeaderProfile() {
                             <label htmlFor='firstname'></label>
                                       {/* <input id="inputFirstName" type='text' onChange={onChangeFirstName}
                                       placeholder={userFirstName} required/> */}
-                                      <input id="inputFirstName" type='text' onChange={handleFirstNameChange} value={firstName}
+                                      <input id="inputFirstName" type='text'
+                                      onFocus={handleFocus} 
+                                      onChange={handleFirstNameChange} 
+                                      // value={inputValue}
+                                      value={firstName} 
                                       // placeholder={userFirstName} 
                                       />
 
                             <label htmlFor='name'></label>
                                     {/* <input id="inputLastName" type='text' onChange={onChangeLastName} 
                                     placeholder={userLastName} required/> */}
-                                    <input id="inputLastName" type='text' onChange={handleLastNameChange} value={lastName}
+                                    <input id="inputLastName" type='text' 
+                                    onFocus={handleFocus} 
+                                    onChange={handleLastNameChange} 
+                                    value={lastName}
                                     // placeholder={userLastName} 
                                     />
                             

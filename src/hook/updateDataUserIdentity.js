@@ -1,6 +1,6 @@
 import { setUserFirstName, setUserLastName} from '../store/user.slice';
 
-export const updateDataUserIdentity = async (setIsLoading, setError, firstName, lastName, token, dispatch) => {
+export const updateDataUserIdentity = async (setIsLoading, setError,token,  firstName, lastName,dispatch) => {
     setIsLoading(true);
     setError(null);
     try {
@@ -19,8 +19,6 @@ export const updateDataUserIdentity = async (setIsLoading, setError, firstName, 
       const res = await data.body;
       dispatch(setUserFirstName(res.firstName))
       dispatch(setUserLastName(res.lastName))
-      
-      console.log(res)
     } catch (error) {
       setError(error)
     } finally {
