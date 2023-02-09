@@ -17,6 +17,7 @@ export default function HeaderPage() {
   const userFirstName = useSelector((state) => state.user.userFirstName); 
 
     const handleLogout = () => {
+      localStorage.removeItem("token");
       dispatch(logout())
       redirect('/')
     }

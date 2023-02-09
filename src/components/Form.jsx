@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
-import { Link, redirect ,  useNavigate} from 'react-router-dom'
-import { setToken, setIsAuthentificated, setUserFirstName, setUserLastName, setErrorLogin} from './../store/user.slice';
+import { useNavigate} from 'react-router-dom'
+import { setToken, setIsAuthentificated} from './../store/user.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AES, enc } from 'crypto-js'
-// import { setUserFirstName, setUserName } from '../store/user.slice';
+import {login} from './../hook/useLogin'
 
 const KEY = "g5yFO1236Dxilp";
 
@@ -11,22 +11,20 @@ const KEY = "g5yFO1236Dxilp";
 export default function Form() {
   const dispatch = useDispatch();
   const navigate =  useNavigate();
-  // const token = useSelector((state) => state.user.token);
+  const token = useSelector((state) => state.user.token);
   const isAuthentificated = useSelector((state) => state.user.isAuthentificated);
   const errorLogin = useSelector((state) => state.user.errorLogin);
   const [rememberMe, setRememberMe] = useState(false);
-  // const userFirstName = useSelector((state) => state.user.userFirstName);
-  // const userLastName = useSelector((state) => state.user.userLastName);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const encryptedEmail = localStorage.getItem("email");
-    const encryptedPassword = localStorage.getItem("password");
-    if (encryptedEmail && encryptedPassword) {
-      setEmail(AES.decrypt(encryptedEmail, KEY).toString(enc.Utf8));
-      setPassword(AES.decrypt(encryptedPassword, KEY).toString(enc.Utf8));
+    const encryptedLoginUser = localStorage.getItem("loginUser");
+    if (encryptedLoginUser) {
+      const decryptedLoginUser = JSON.parse(AES.decrypt(encryptedLoginUser, KEY).toString(enc.Utf8));
+      setEmail(decryptedLoginUser.email);
+      setPassword(decryptedLoginUser.password);
       setRememberMe(true);
     }
   }, []);
@@ -34,55 +32,53 @@ export default function Form() {
   const handleRememberMe = (event) => {
     setRememberMe(event.target.checked);
     if (event.target.checked) {
+      const loginUser = { email, password };
       localStorage.setItem(
-        "email",
-        AES.encrypt(email, KEY).toString()
-      );
-      localStorage.setItem(
-        "password",
-        AES.encrypt(password, KEY).toString()
+        "loginUser",
+        AES.encrypt(JSON.stringify(loginUser), KEY).toString()
       );
     } else {
-      localStorage.removeItem("email");
-      localStorage.removeItem("password");
+      localStorage.removeItem("loginUser");
     }
   };
 
+  useEffect(() => {
+    const encryptedToken = localStorage.getItem("token");
+    if (encryptedToken) {
+      const decryptedToken = JSON.parse(AES.decrypt(encryptedToken, KEY).toString(enc.Utf8));
+      dispatch(setToken(decryptedToken));
+      dispatch(setIsAuthentificated(true));
+    }
+  }, [dispatch]);
   
-  const handleFormLogin = async (event) => {
-    event.preventDefault();
-    setIsLoading(true);
-    try {
-      const response = await fetch('http://localhost:3001/api/v1/user/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      });
-      if (!response.ok) {
-        throw new Error(response.statusText);
+  useEffect(() => {
+    if (token) {
+        localStorage.setItem(
+          "token",
+          AES.encrypt(JSON.stringify(token), KEY).toString()
+        );
+        }
+  }, [token]);
+
+    useEffect(() => {
+      if (errorLogin) {
+        alert(errorLogin);
       }
-      const data = await response.json();
-      const res = await data.body;
-      dispatch(setToken(res.token))
-      console.log(res.token)
-      dispatch(setIsAuthentificated(true))
-      navigate('/profile');
-    } catch (error) {
-      dispatch(setErrorLogin(error))
-    } finally {
-      setIsLoading(false);
+    }, [errorLogin]); 
+
+
+    const handleFormLogin = (event) => {
+      event.preventDefault()
+     login(setIsLoading, email, password, dispatch)
     }
-  };
 
-  // useEffect(() => {
-  //   if (isAuthentificated) {
-  //     navigate('/profile')
-  //   }
-  // }, [isAuthentificated, navigate])
+    useEffect(() => {
+      if (isAuthentificated) {
+        navigate('/profile')
+      }
+    }, [isAuthentificated, navigate]);
+  
 
- 
   return (
     <form onSubmit={handleFormLogin}>
           <div className="input-wrapper">
@@ -96,7 +92,6 @@ export default function Form() {
           <div className="input-remember">
             <label htmlFor="remember-me">
               <input type="checkbox" id="remember-me"  checked={rememberMe} 
-              // onChange={e => setRememberMe(e.target.checked)} 
               onChange={handleRememberMe} 
               />
                 Remember me

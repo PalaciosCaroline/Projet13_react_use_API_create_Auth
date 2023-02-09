@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+// import { createAsyncThunk } from '@reduxjs/toolkit';
 
 const initialState = {
   token: null,
@@ -30,6 +31,7 @@ const userSlice = createSlice({
       state.userFirstName = '';
       state.userLastName = '';
       state.isAuthentificated = false;
+     
     },
     setErrorUpdateIdentity: (state, action) => {
       state.errorUpdateIdentity = action.payload;
@@ -46,7 +48,4 @@ const userSlice = createSlice({
 export const { setToken, setUserFirstName, setUserLastName, setIsAuthentificated, logout, setErrorLogin, setErrorUpdateIdentity, setIsLoadingLogin } = userSlice.actions;
 
 export default userSlice.reducer;
-
-
-
 
