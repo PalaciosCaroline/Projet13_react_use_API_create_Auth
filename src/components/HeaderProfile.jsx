@@ -29,9 +29,9 @@ export default function HeaderProfile() {
     setLastName(userLastName)
   }, [userFirstName, userLastName])
 
-  const handleFocus = (event) => {
-    event.target.value = '';
-  };
+  // const handleFocus = (event) => {
+  //   event.target.value = '';
+  // };
 
   const handleNameChange = (setName, errorMessage) => event => {
     const input = event.target.value;
@@ -39,7 +39,7 @@ export default function HeaderProfile() {
     if (!regex.test(input)) {
       setErrorName(errorMessage);
       return;
-    } else if (regex.test(input) && input.length > 0) {
+    } else if (regex.test(input) && input.length >= 0) {
       setErrorName('');
       setName(input);
     }
@@ -101,7 +101,7 @@ export default function HeaderProfile() {
                                       {/* <input id="inputFirstName" type='text' onChange={onChangeFirstName}
                                       placeholder={userFirstName} required/> */}
                                       <input id="inputFirstName" type='text'
-                                      onFocus={handleFocus} 
+                                      // onFocus={handleFocus} 
                                       onChange={handleFirstNameChange} 
                                       // value={inputValue}
                                       value={firstName} 
@@ -112,7 +112,7 @@ export default function HeaderProfile() {
                                     {/* <input id="inputLastName" type='text' onChange={onChangeLastName} 
                                     placeholder={userLastName} required/> */}
                                     <input id="inputLastName" type='text' 
-                                    onFocus={handleFocus} 
+                                    // onFocus={handleFocus} 
                                     onChange={handleLastNameChange} 
                                     value={lastName}
                                     // placeholder={userLastName} 
