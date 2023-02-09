@@ -12,6 +12,9 @@ export default function HeaderProfile() {
   const [lastName, setLastName] = useState(userLastName);
   const [activeNameForm, setActiveNameForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorName, setErrorName] = useState('');
+  // const [errorFirstName, setErrorFirstName] = useState('');
+  // const [errorLastName, setErrorLastName] = useState('');
   const [error, setError] = useState("");
 
   const editNameForm = () => setActiveNameForm(!activeNameForm)
@@ -25,10 +28,35 @@ export default function HeaderProfile() {
     setLastName(userLastName)
   }, [userFirstName, userLastName])
 
+
+  const handleFirstNameChange = (event) => {
+    const input = event.target.value;
+    const regex = /^[a-zA-Z-' ]{1,40}$/;
+    if (!regex.test(input) || input.length > 40) {
+      setErrorName('Veuillez rentrer un prénom valide');
+      return;
+    }
+    setErrorName('');
+    setFirstName(input);
+  };
+
+  const handleLastNameChange = (event) => {
+    const input = event.target.value;
+    const regex = /^[a-zA-Z-' ]{1,40}$/;
+    if (!regex.test(input) || input.length > 40) {
+      setErrorName('Veuillez rentrer un nom valide');
+      return;
+    }
+    setErrorName('');
+    setLastName(input);
+  };
+
+
   const handleUpdateIdentityUser = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
+    if(!setErrorName) return;
     // let firstNameInput = document.getElementById('inputFirstName').value;
     //   if (!firstNameInput) {
     //   setFirstName(userFirstName);
@@ -68,34 +96,25 @@ export default function HeaderProfile() {
         { activeNameForm ?
                     ( <div className="container_formName">
                         <form className='formProfile'  onSubmit={handleUpdateIdentityUser}>
-                            <div className='box_form'>
-                                <div className='box_firstName'>
-                                  <div className='box_flexFormName'>
-                                      <label htmlFor='firstname'></label>
+                        {errorName && <p className='errorInputName'>{errorName}</p>}
+                            <label htmlFor='firstname'></label>
                                       {/* <input id="inputFirstName" type='text' onChange={onChangeFirstName}
                                       placeholder={userFirstName} required/> */}
-                                      <input id="inputFirstName" type='text' onChange={e => setFirstName(e.target.value)} value={firstName}
+                                      <input id="inputFirstName" type='text' onChange={handleFirstNameChange} value={firstName}
                                       // placeholder={userFirstName} 
                                       />
-                                      <button  className='btnSave' disabled={isLoading}>Save</button>
-                                  </div>
-                                </div>
-                                <div className='box_Name'>
-                                  <div className='box_flexFormName'>
-                                    <label htmlFor='name'></label>
+
+                            <label htmlFor='name'></label>
                                     {/* <input id="inputLastName" type='text' onChange={onChangeLastName} 
                                     placeholder={userLastName} required/> */}
-                                    <input id="inputLastName" type='text' onChange={e => setLastName(e.target.value)} value={lastName}
+                                    <input id="inputLastName" type='text' onChange={handleLastNameChange} value={lastName}
                                     // placeholder={userLastName} 
                                     />
-                                    <button className='btnCancel' onClick={editNameForm} disabled={isLoading} >Cancel</button>
-                                  </div>
-                                </div>
-                            </div>
-                            {/* <div className='button_activeForm'> */}
-                                {/* <button  className='btnSave'>Save</button>
-                                <button className='btnCancel'>Cancel</button> */}
-                            {/* </div> */}
+                            
+                            <div className='button_activeForm'> 
+                                <button  className='btnSave' disabled={isLoading}>Save</button>
+                                <button className='btnCancel' onClick={editNameForm} disabled={isLoading} >Cancel</button>
+                            </div> 
                         </form>
                       </div>
                     ) : (
