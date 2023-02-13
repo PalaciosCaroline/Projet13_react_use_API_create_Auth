@@ -330,13 +330,11 @@ body {
 }
 
 #input_firstname.error{
-  /* background-color: rgb(233, 180, 180); */
   border: 5px solid red;
  
 }
 
 #input_lastname.error{
-  background-color: rgb(233, 180, 180);
   border: 5px solid red;
 }
 
