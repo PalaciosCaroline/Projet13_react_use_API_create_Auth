@@ -2,7 +2,7 @@
   import { setToken, setIsAuthentificated, setErrorLogin } from './../store/user.slice';
   
 
-  export async function login(setIsLoading, email, password, dispatch) {
+  export  const login = async (setIsLoading, email, password, dispatch) => {
       setIsLoading(true);
     try {
       const response = await fetch('http://localhost:3001/api/v1/user/login', {

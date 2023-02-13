@@ -2,7 +2,7 @@ import React,  { useEffect }  from 'react'
 import { useDispatch, useSelector } from "react-redux";
 // import { logout } from './../store/user.slice';
 // import { useHistory } from 'react-router-dom';
-import { Link, redirect } from 'react-router-dom'
+import { Link, redirect, useNavigate } from 'react-router-dom'
 import Logo from './../assets/argentBankLogo.png'
 import { FaUserCircle, FaSignInAlt } from 'react-icons/fa';
 // import LogoutUser from '../utils/logout';
@@ -12,6 +12,7 @@ import { setUserFirstName, setUserLastName, setToken,logout, setIsAuthentificate
 
 export default function HeaderPage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isAuthentificated = useSelector((state) => state.user.isAuthentificated);
 
   const userFirstName = useSelector((state) => state.user.userFirstName); 
@@ -19,7 +20,8 @@ export default function HeaderPage() {
     const handleLogout = () => {
       localStorage.removeItem("token");
       dispatch(logout())
-      redirect('/')
+      // redirect('/')
+      navigate('/')
     }
 
   return (

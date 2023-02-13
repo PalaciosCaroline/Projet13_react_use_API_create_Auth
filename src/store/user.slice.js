@@ -31,16 +31,15 @@ const userSlice = createSlice({
       state.userFirstName = '';
       state.userLastName = '';
       state.isAuthentificated = false;
-     
-    },
-    setErrorUpdateIdentity: (state, action) => {
-      state.errorUpdateIdentity = action.payload;
     },
     setErrorLogin: (state, action) => {
       state.errorLogin = action.payload;
     },
     setIsLoadingLogin: (state, action) => {
       state.isloadingLogin = action.payload;
+    },
+    setErrorUpdateIdentity: (state, action) => {
+      state.errorUpdateIdentity = action.payload;
     },
   },
 });

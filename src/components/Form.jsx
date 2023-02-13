@@ -4,8 +4,9 @@ import { setToken, setIsAuthentificated} from './../store/user.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AES, enc } from 'crypto-js'
 import {login} from './../hook/useLogin'
+import  {useLocalStorageLogin, useLocalStorageToken} from './../hook/useLocaleStorage'
 
-const KEY = "g5yFO1236Dxilp";
+// const KEY = "g5yFO1236Dxilp";
 
 
 export default function Form() {
@@ -14,51 +15,37 @@ export default function Form() {
   const token = useSelector((state) => state.user.token);
   const isAuthentificated = useSelector((state) => state.user.isAuthentificated);
   const errorLogin = useSelector((state) => state.user.errorLogin);
-  const [rememberMe, setRememberMe] = useState(false);
+  // const [rememberMe, setRememberMe] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const encryptedLoginUser = localStorage.getItem("loginUser");
-    if (encryptedLoginUser) {
-      const decryptedLoginUser = JSON.parse(AES.decrypt(encryptedLoginUser, KEY).toString(enc.Utf8));
-      setEmail(decryptedLoginUser.email);
-      setPassword(decryptedLoginUser.password);
-      setRememberMe(true);
-    }
-  }, []);
+ const { rememberMe, setRememberMe,
+  handleRememberMe} = useLocalStorageLogin(email, setEmail, password, setPassword);
+  // useEffect(() => {
+  //   const encryptedLoginUser = localStorage.getItem("loginUser");
+  //   if (encryptedLoginUser) {
+  //     const decryptedLoginUser = JSON.parse(AES.decrypt(encryptedLoginUser, KEY).toString(enc.Utf8));
+  //     setEmail(decryptedLoginUser.email);
+  //     setPassword(decryptedLoginUser.password);
+  //     setRememberMe(true);
+  //   }
+  // }, []);
 
-  const handleRememberMe = (event) => {
-    setRememberMe(event.target.checked);
-    if (event.target.checked) {
-      const loginUser = { email, password };
-      localStorage.setItem(
-        "loginUser",
-        AES.encrypt(JSON.stringify(loginUser), KEY).toString()
-      );
-    } else {
-      localStorage.removeItem("loginUser");
-    }
-  };
+  // const handleRememberMe = (event) => {
+  //   setRememberMe(event.target.checked);
+  //   if (event.target.checked) {
+  //     const loginUser = { email, password };
+  //     localStorage.setItem(
+  //       "loginUser",
+  //       AES.encrypt(JSON.stringify(loginUser), KEY).toString()
+  //     );
+  //   } else {
+  //     localStorage.removeItem("loginUser");
+  //   }
+  // };
 
-  useEffect(() => {
-    const encryptedToken = localStorage.getItem("token");
-    if (encryptedToken) {
-      const decryptedToken = JSON.parse(AES.decrypt(encryptedToken, KEY).toString(enc.Utf8));
-      dispatch(setToken(decryptedToken));
-      dispatch(setIsAuthentificated(true));
-    }
-  }, [dispatch]);
-  
-  useEffect(() => {
-    if (token) {
-        localStorage.setItem(
-          "token",
-          AES.encrypt(JSON.stringify(token), KEY).toString()
-        );
-        }
-  }, [token]);
+    useLocalStorageToken(dispatch, token, setToken, setIsAuthentificated)
 
     useEffect(() => {
       if (errorLogin) {

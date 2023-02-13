@@ -8,7 +8,7 @@ import Erreur404 from './pages/Erreur404'
 export default function Router() {
   return (
     <Routes>
-      <Route index element={<Home />} />
+      <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="*" element={<Erreur404 />} />

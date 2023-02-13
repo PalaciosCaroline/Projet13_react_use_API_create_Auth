@@ -28,6 +28,11 @@ paths:
           description: Month to retrieve transactions for (in YYYY-MM format)
           type: string
           required: false
+          default: getCurrentDate()(avec function getCurrentDate() {
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            return `${year}-${month}`;})
         - in: query
           name: sort
           description: The sort order for the transactions. Possible values are 'asc' (ascending) and 'desc' (descending).
@@ -63,7 +68,7 @@ paths:
       tags:
         - Module Single transaction
       summary: User Single Transaction
-      description: API to display one of transaction by Id in list of transactions of the current month
+      description: API to display one of transaction by Id in list of transactions
       parameters:
         - in: path
           name: transactionId

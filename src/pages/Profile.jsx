@@ -13,7 +13,7 @@ export default function Profile() {
   if (!isAuthentificated) {
       navigate("/login");
   }
-  }, [isAuthentificated])
+  }, [isAuthentificated, navigate])
 
 
   return (isAuthentificated &&

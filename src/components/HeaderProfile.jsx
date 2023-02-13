@@ -1,8 +1,8 @@
 import React, {useState, useEffect } from 'react'
 import { useDispatch ,useSelector} from "react-redux";
-import { setUserFirstName, setUserLastName} from './../store/user.slice';
-import { getDataIdentityUser } from '../hook/getDataUserIdentity';
-import {updateDataUserIdentity} from './../hook/updateDataUserIdentity'
+import { readUserIdentity } from '../hook/readUserIdentity';
+import {updateUserIdentity} from './../hook/updateUserIdentity'
+import {handleNameChange, controlLenghtName} from './../utils/controlInput'
 
 export default function HeaderProfile() {
   const dispatch = useDispatch();
@@ -18,10 +18,15 @@ export default function HeaderProfile() {
   // const [errorLastName, setErrorLastName] = useState('');
   const [error, setError] = useState("");
 
-  const editNameForm = () => setActiveNameForm(!activeNameForm)
+  const editNameForm = () => {
+    setFirstName(userFirstName)
+    setLastName(userLastName)
+    setErrorName('')
+    setActiveNameForm(!activeNameForm)
+  }
 
   useEffect(() => {
-    getDataIdentityUser(setIsLoading,setError, token, dispatch)  
+    readUserIdentity(setIsLoading,setError, token, dispatch)  
   }, [dispatch, token])
 
   useEffect(() => {
@@ -33,58 +38,41 @@ export default function HeaderProfile() {
   //   event.target.value = '';
   // };
 
-  const handleNameChange = (setName, errorMessage) => event => {
-    const input = event.target.value;
-    const regex = /^[a-zA-Z-' ]{0,40}?$/;
-    if (!regex.test(input)) {
-      setErrorName(errorMessage);
-      return;
-    } else if (regex.test(input) && input.length >= 0) {
-      setErrorName('');
-      setName(input);
-    }
-  };
+  // const handleNameChange = (name, setName) => event => {
+  //   const input = event.target.value;
+  //   const regex = /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ\-'\s]{0,40}$/;
+  //   if (!regex.test(input)) {
+  //     event.target.classList.add('error');
+  //     setErrorName(`Please enter a valid ${name}`);
+  //     return;
+  //   } else if (regex.test(input)) {
+  //       setName(input);
+  //       event.target.classList.remove('error');
+  //       setErrorName('');
+  //   }
+  // };
 
-  const handleFirstNameChange = handleNameChange(setFirstName, 'Veuillez rentrer un prénom valide');
-  const handleLastNameChange = handleNameChange(setLastName, 'Veuillez rentrer un nom valide');
+  // const controlLenghtName  = (nameToControl, name) => {
+  //   if (nameToControl.length <= 1) {
+  //       setErrorName(`The ${name} must contain at least 2 letters`);
+  //       document.getElementById(`input_${name}`).classList.add('error');
+  //     return false;
+  //   } else {
+  //     setErrorName('');
+  //     document.getElementById(`input_${name}`).classList.remove('error');
+  //     return true;
+  //   }
+  // }
 
+  const handleFirstNameChange = handleNameChange(setErrorName, 'firstname', setFirstName);
+  const handleLastNameChange = handleNameChange(setErrorName, 'lastname', setLastName);
+ 
   const handleUpdateIdentityUser = async (e) => {
     e.preventDefault();
-    if(!setErrorName) return;
+    if(!controlLenghtName(setErrorName, firstName, 'firstname') || !controlLenghtName(setErrorName,lastName, 'lastname')) return;
     setIsLoading(true);
     setError(null);
-    updateDataUserIdentity(setIsLoading,setError, token, firstName, lastName, dispatch) 
-    // let firstNameInput = document.getElementById('inputFirstName').value;
-    //   if (!firstNameInput) {
-    //   setFirstName(userFirstName);
-    // }
-    // let lastNameInput = document.getElementById('inputLastName').value;
-    //   if (!lastNameInput) {
-    //     setLastName(userLastName);
-    //   }
-    // try {
-    //   const response = await fetch('http://localhost:3001/api/v1/user/profile', {
-    //     method: 'PUT',
-    //     headers: {
-    //       'Authorization': `Bearer ${token}`,
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({firstName , lastName })
-    //   });
-    //   if (!response.ok) {
-    //     throw new Error(response.statusText);
-    //   }
-    //   const data = await response.json();
-    //   const res = await data.body;
-    //   dispatch(setUserFirstName(res.firstName))
-    //   dispatch(setUserLastName(res.lastName))
-    //   dispatch(setActiveNameForm(false))
-    //   console.log(data)
-    // } catch (error) {
-    //   setError(error)
-    // } finally {
-    //   setIsLoading(false);
-    // }
+    updateUserIdentity(setIsLoading,setError, token, firstName, lastName, dispatch) 
     if (!error) {
       setActiveNameForm(false)
     }
@@ -98,25 +86,20 @@ export default function HeaderProfile() {
                         <form className='formProfile'  onSubmit={handleUpdateIdentityUser}>
                         {errorName && <p className='errorInputName'>{errorName}</p>}
                             <label htmlFor='firstname'></label>
-                                      {/* <input id="inputFirstName" type='text' onChange={onChangeFirstName}
-                                      placeholder={userFirstName} required/> */}
-                                      <input id="inputFirstName" type='text'
+                              <input id="input_firstname" type='text'
                                       // onFocus={handleFocus} 
                                       onChange={handleFirstNameChange} 
-                                      // value={inputValue}
                                       value={firstName} 
                                       // placeholder={userFirstName} 
-                                      />
+                                />
 
                             <label htmlFor='name'></label>
-                                    {/* <input id="inputLastName" type='text' onChange={onChangeLastName} 
-                                    placeholder={userLastName} required/> */}
-                                    <input id="inputLastName" type='text' 
+                              <input id="input_lastname" type='text' 
                                     // onFocus={handleFocus} 
                                     onChange={handleLastNameChange} 
                                     value={lastName}
                                     // placeholder={userLastName} 
-                                    />
+                              />
                             
                             <div className='button_activeForm'> 
                                 <button  className='btnSave' disabled={isLoading}>Save</button>

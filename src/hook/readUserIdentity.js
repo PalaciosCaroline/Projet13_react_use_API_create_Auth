@@ -1,6 +1,6 @@
 import { setUserFirstName, setUserLastName} from '../store/user.slice';
 
-export async function getDataIdentityUser(setIsLoading,setError,token,dispatch ) {
+export const readUserIdentity = async (setIsLoading,setError,token,dispatch ) => {
     setIsLoading(true);
     setError(null);
     try{
