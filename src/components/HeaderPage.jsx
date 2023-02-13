@@ -2,13 +2,10 @@ import React,  { useEffect }  from 'react'
 import { useDispatch, useSelector } from "react-redux";
 // import { logout } from './../store/user.slice';
 // import { useHistory } from 'react-router-dom';
-import { Link, redirect, useNavigate } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import Logo from './../assets/argentBankLogo.png'
 import { FaUserCircle, FaSignInAlt } from 'react-icons/fa';
-// import LogoutUser from '../utils/logout';
-import { setUserFirstName, setUserLastName, setToken,logout, setIsAuthentificated } from '../store/user.slice';
-
-
+import { logout} from '../store/user.slice';
 
 export default function HeaderPage() {
   const dispatch = useDispatch();
@@ -20,7 +17,6 @@ export default function HeaderPage() {
     const handleLogout = () => {
       localStorage.removeItem("token");
       dispatch(logout())
-      // redirect('/')
       navigate('/')
     }
 
@@ -32,7 +28,6 @@ export default function HeaderPage() {
                 <h1 className="sr-only">Argent Bank</h1>
            </Link> 
            <div className='box_sign'>
-                
               <FaUserCircle />
                 {isAuthentificated ? 
                  (<Link className="main-nav-item" to="/profile">{userFirstName}</Link>) :
