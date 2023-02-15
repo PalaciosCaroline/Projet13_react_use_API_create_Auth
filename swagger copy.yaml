@@ -28,7 +28,11 @@ paths:
           description: Month to retrieve transactions for (in YYYY-MM format)
           type: string
           required: false
-          default: current month
+          default: getCurrentDate()(avec function getCurrentDate() {
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            return `${year}-${month}`;})
         - in: query
           name: sort
           description: The sort order for the transactions. Possible values are 'asc' (ascending) and 'desc' (descending).
@@ -97,15 +101,14 @@ paths:
           description: Too Many Requests (the number of requests made by the user exceeds the allowed limit)
         '500':
           description: Internal Server Error
-          
-    patch:
+    post:
       security:
         - Bearer: []
       tags:
         - Module Single transaction
       summary: User Single Transaction API
-      description: API for creating, updating or deleting an information of a transaction by Id in the list of transactions of current month
-      operationId: PatchTransactionInfos
+      description: API for add information about a transaction by Id in the list of transactions of current month
+      operationId: CreateTransactionInfos
       parameters:
         - in: path
           name: transactionId
@@ -119,38 +122,72 @@ paths:
           type: string
         - in: body
           name: body
-          description: Action and new information to modify of this transaction Payload
+          description: Information Payload to add of this transaction 
           required: true
           schema:
-            type: object
-            properties:
-              action:
-                type: string
-                enum: [create, update, delete]
-              category:
-                type: string
-              comment:
-                type: string
+            $ref: "#/definitions/Transaction"
       responses:
-        "200":
-          description: User information's transaction is modified successfully
+          "200":
+            description: User  information'stransaction are created with successfully
+            schema:
+              type: array
+              items:
+                        $ref: "#/definitions/Transaction" 
+          "400":
+              description: Bad Request ( the request parameters are invalid or missing.)
+          "401":
+              description: Unauthorized 
+          "403":
+              description: Forbidden
+          "404":
+              description: Not Found ( the requested transactions are not available.)
+          "429":
+              description: Too Many Requests ( the number of requests made by the user exceeds the allowed limit.)
+          "500":
+              description: Internal Server Error    
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Module Single transaction
+      summary: User Single Transaction API
+      description: API for updating (change or delete) information about a transaction by Id in the list of transactions of current month
+      parameters:
+        - in: path
+          name: transactionId
+          description: ID of transaction to fetch
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: new information to change of this transaction Payload
+          required: true
           schema:
-            type: array
-            items:
-              $ref: "#/definitions/Transaction" 
-        "400":
-          description: Bad Request (the request parameters are invalid or missing)
-        "401":
-          description: Unauthorized 
-        "403":
-          description: Forbidden
-        "404":
-          description: Not Found (the requested transactions are not available)
-        "429":
-          description: Too Many Requests (the number of requests made by the user exceeds the allowed limit)
-        "500":
-          description: Internal Server Error    
-  
+            $ref: "#/definitions/Transaction"
+      responses:
+          "200":
+            description: User information's transaction is update successfully
+            schema:
+              type: array
+              items:
+                        $ref: "#/definitions/Transaction" 
+          "400":
+              description: Bad Request ( the request parameters are invalid or missing.)
+          "401":
+              description: Unauthorized 
+          "403":
+              description: Forbidden
+          "404":
+              description: Not Found ( the requested transactions are not available.)
+          "429":
+              description: Too Many Requests ( the number of requests made by the user exceeds the allowed limit.)
+          "500":
+              description: Internal Server Error    
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -177,11 +214,14 @@ definitions:
         balance:
           type: integer
           description: account balance after transaction
-        category:
+        transactionInfos:
+          type: object
+          properties: 
+            category:
               type: string
               description: transaction's category
               example: Restaurant
-        comment:
+            comment:
               type: string
               description: transaction's comment
         
