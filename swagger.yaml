@@ -177,12 +177,16 @@ definitions:
         balance:
           type: integer
           description: account balance after transaction
+        transactionType:
+          type: object
+          description: Type àf transaction 
+          example: 'Electronic' or 'mandat' or 'check'
         category:
-              type: string
-              description: transaction's category
-              example: Restaurant
-        comment:
-              type: string
-              description: transaction's comment
-        
+          type: string
+          description: transaction's category
+          example: 'Restaurant'
+        notes:
+          type: string
+          description: transaction's notes
+          example: 'It was very expensive and the portions were so small'
               

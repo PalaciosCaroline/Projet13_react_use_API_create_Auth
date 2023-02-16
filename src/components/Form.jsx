@@ -28,7 +28,6 @@ export default function Form() {
     dispatch(setErrorLogin(''));
   }, [email, password, dispatch]);
 
-
   useEffect(() => {
     if (isAuthentificated) {
       navigate('/profile')
@@ -38,16 +37,23 @@ export default function Form() {
   return (
     <form onSubmit={handleFormLogin}>
           <div className="input-wrapper">
-            <label htmlFor="email">Username</label
-            ><input type="text" id="email" value={email} onChange={e => setEmail(e.target.value)} autoComplete='email'/>
+            <label htmlFor="email">Username</label>
+            <input type="text" id="email" 
+              value={email} 
+              onChange={e => setEmail(e.target.value)} 
+              autoComplete='email'/>
           </div>
           <div className="input-wrapper">
-            <label htmlFor="password">Password</label
-            ><input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} autoComplete='password' />
+            <label htmlFor="password">Password</label>
+            <input type="password" id="password" 
+              value={password} 
+              onChange={e => setPassword(e.target.value)} 
+              autoComplete='password' />
           </div>
           <div className="input-remember">
             <label htmlFor="remember-me">
-              <input type="checkbox" id="remember-me"  checked={rememberMe} 
+            <input type="checkbox" id="remember-me"  
+              checked={rememberMe} 
               onChange={handleRememberMe} 
               />
                 Remember me
