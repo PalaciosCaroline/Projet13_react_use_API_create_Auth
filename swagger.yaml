@@ -179,7 +179,7 @@ definitions:
           description: account balance after transaction
         transactionType:
           type: object
-          description: Type àf transaction 
+          description: Type of transaction 
           example: 'Electronic' or 'mandat' or 'check'
         category:
           type: string
