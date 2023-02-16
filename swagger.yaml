@@ -180,7 +180,7 @@ definitions:
         transactionType:
           type: object
           description: Type of transaction 
-          example: 'Electronic' or 'mandat' or 'check'
+          example: Electronic' or 'mandat' or 'check
         category:
           type: string
           description: transaction's category
