@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import { useNavigate} from 'react-router-dom'
-import { setToken, setIsAuthentificated} from './../store/user.slice';
+import { setToken, setIsAuthentificated, setErrorLogin} from './../store/user.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import {login} from '../hook/login'
-import {useLocalStorageLogin, useLocalStorageToken} from './../hook/useLocaleStorage'
+import {useLocalStorageLogin, useLocalStorageToken} from './../hook/useLocaleStorage';
 
 export default function Form() {
   const dispatch = useDispatch();
@@ -25,12 +25,16 @@ export default function Form() {
   }
 
   useEffect(() => {
+    dispatch(setErrorLogin(''));
+  }, [email, password, dispatch]);
+
+
+  useEffect(() => {
     if (isAuthentificated) {
       navigate('/profile')
     }
   }, [isAuthentificated, navigate]);
   
-
   return (
     <form onSubmit={handleFormLogin}>
           <div className="input-wrapper">
@@ -39,7 +43,7 @@ export default function Form() {
           </div>
           <div className="input-wrapper">
             <label htmlFor="password">Password</label
-            ><input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} autoComplete='password'/>
+            ><input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} autoComplete='password' />
           </div>
           <div className="input-remember">
             <label htmlFor="remember-me">
@@ -48,9 +52,8 @@ export default function Form() {
               />
                 Remember me
             </label>
-
           </div>
-          <button type="submit" className="sign-in-button"  disabled={isLoading}>Sign In</button>
+          <button type="submit" className={`${errorLogin ? 'redAlert' : 'noAlert'} sign-in-button`} disabled={isLoading}>Sign In</button>
           {errorLogin && <p>UserName or Password is incorrect</p>}
     </form>
   )

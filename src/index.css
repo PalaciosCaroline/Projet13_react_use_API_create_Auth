@@ -217,6 +217,14 @@ nav .nav-icon{
   border: 1px solid  #00bc77;
 }
 
+.redAlert {
+  background-color: #eb5b22;
+}
+
+.noAlert{
+  background-color: #00bc77;
+}
+
 .sign-in-content {
   box-sizing: border-box;
   background-color: white;
