@@ -495,3 +495,39 @@ nav .nav-icon{
   padding-bottom:20px;
 } 
 
+.box_transactions_page{
+  padding: 30px;
+  background-color: #13da91;
+}
+
+.row_table{
+  height: 40px;
+  background-color: #fff;
+}
+
+.thead_transactions{
+  background-color: #13da91;
+  border: none;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+.th_thead_transactions {
+  border: none;
+}
+
+th{
+  border: 1px solid #333;
+}
+
+.transactions_rest_infos{
+  height: auto;
+  margin-left: 50px;
+  background-color: #fff;
+}
+
+.box_info{
+  display: flex;
+}
