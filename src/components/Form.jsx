@@ -2,12 +2,8 @@ import React, {useState, useEffect} from 'react'
 import { useNavigate} from 'react-router-dom'
 import { setToken, setIsAuthentificated} from './../store/user.slice';
 import { useDispatch, useSelector } from 'react-redux';
-import { AES, enc } from 'crypto-js'
-import {login} from './../hook/useLogin'
-import  {useLocalStorageLogin, useLocalStorageToken} from './../hook/useLocaleStorage'
-
-// const KEY = "g5yFO1236Dxilp";
-
+import {login} from '../hook/login'
+import {useLocalStorageLogin, useLocalStorageToken} from './../hook/useLocaleStorage'
 
 export default function Form() {
   const dispatch = useDispatch();
@@ -15,55 +11,24 @@ export default function Form() {
   const token = useSelector((state) => state.user.token);
   const isAuthentificated = useSelector((state) => state.user.isAuthentificated);
   const errorLogin = useSelector((state) => state.user.errorLogin);
-  // const [rememberMe, setRememberMe] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
- const { rememberMe, setRememberMe,
-  handleRememberMe} = useLocalStorageLogin(email, setEmail, password, setPassword);
-  // useEffect(() => {
-  //   const encryptedLoginUser = localStorage.getItem("loginUser");
-  //   if (encryptedLoginUser) {
-  //     const decryptedLoginUser = JSON.parse(AES.decrypt(encryptedLoginUser, KEY).toString(enc.Utf8));
-  //     setEmail(decryptedLoginUser.email);
-  //     setPassword(decryptedLoginUser.password);
-  //     setRememberMe(true);
-  //   }
-  // }, []);
+  useLocalStorageToken(dispatch, token, setToken, setIsAuthentificated)
 
-  // const handleRememberMe = (event) => {
-  //   setRememberMe(event.target.checked);
-  //   if (event.target.checked) {
-  //     const loginUser = { email, password };
-  //     localStorage.setItem(
-  //       "loginUser",
-  //       AES.encrypt(JSON.stringify(loginUser), KEY).toString()
-  //     );
-  //   } else {
-  //     localStorage.removeItem("loginUser");
-  //   }
-  // };
+  const {rememberMe, handleRememberMe} = useLocalStorageLogin(email, setEmail, password, setPassword, isAuthentificated);
 
-    useLocalStorageToken(dispatch, token, setToken, setIsAuthentificated)
+  const handleFormLogin = (event) => {
+    event.preventDefault()
+    login(setIsLoading, email, password, dispatch)
+  }
 
-    useEffect(() => {
-      if (errorLogin) {
-        alert(errorLogin);
-      }
-    }, [errorLogin]); 
-
-
-    const handleFormLogin = (event) => {
-      event.preventDefault()
-     login(setIsLoading, email, password, dispatch)
+  useEffect(() => {
+    if (isAuthentificated) {
+      navigate('/profile')
     }
-
-    useEffect(() => {
-      if (isAuthentificated) {
-        navigate('/profile')
-      }
-    }, [isAuthentificated, navigate]);
+  }, [isAuthentificated, navigate]);
   
 
   return (

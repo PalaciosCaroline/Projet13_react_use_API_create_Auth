@@ -1,14 +1,13 @@
-import { useEffect, useState } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState, useCallback } from 'react';
 import { AES, enc } from 'crypto-js';
 
 const KeyLogin = 'g5yFO1236Dxilp';
 const KeyToken = "groqIU25xdd";
 
-export function useLocalStorageLogin(email, setEmail, password, setPassword){
+export function useLocalStorageLogin(email, setEmail, password, setPassword, isAuthentificated){
   const [rememberMe, setRememberMe] = useState(false);
 
-  const loadDataFromLocalStorage = () => {
+  const loadDataFromLocalStorage = useCallback(() => {
     const encryptedLoginUser = localStorage.getItem("loginUser");
     if (encryptedLoginUser) {
       const decryptedLoginUser = JSON.parse(AES.decrypt(encryptedLoginUser, KeyLogin).toString(enc.Utf8));
@@ -16,35 +15,38 @@ export function useLocalStorageLogin(email, setEmail, password, setPassword){
       setPassword(decryptedLoginUser.password);
       setRememberMe(true);
     }
-  };
+  }, [setEmail, setPassword, setRememberMe]);
 
-  const saveLoginToLocalStorage = (event) => {
-    if (event.target.checked) {
+  const saveLoginToLocalStorage = (email, password) => {
       const loginUser = { email, password };
       localStorage.setItem(
         "loginUser",
         AES.encrypt(JSON.stringify(loginUser), KeyLogin).toString()
       );
-    } else {
-      localStorage.removeItem("loginUser");
-    }
   };
 
   useEffect(() => {
     loadDataFromLocalStorage();
-  }, []);
+  }, [ loadDataFromLocalStorage]);
+
+  useEffect(() => {
+    if (isAuthentificated && rememberMe) {
+      saveLoginToLocalStorage(email, password);
+    }
+  }, [isAuthentificated,rememberMe, email, password]);
 
   const handleRememberMe = (event) => {
     setRememberMe(event.target.checked);
-    saveLoginToLocalStorage(event);
+      if(!event.target.checked) {
+        localStorage.removeItem("loginUser");
+      }
   };
 
   return {
-    rememberMe, setRememberMe,
+    rememberMe,
     handleRememberMe,
   };
 };
-
 
 export function useLocalStorageToken(dispatch, token, setToken, setIsAuthentificated) {
 

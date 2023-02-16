@@ -1,9 +1,10 @@
 
-  import { setToken, setIsAuthentificated, setErrorLogin } from './../store/user.slice';
-  
+  import { setToken, setIsAuthentificated, setErrorLogin } from '../store/user.slice';
+
 
   export  const login = async (setIsLoading, email, password, dispatch) => {
       setIsLoading(true);
+      dispatch(setErrorLogin(''));
     try {
       const response = await fetch('http://localhost:3001/api/v1/user/login', {
         method: 'POST',

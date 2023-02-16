@@ -1,8 +1,6 @@
-import React,  { useEffect }  from 'react'
+import React, {useState} from 'react'
 import { useDispatch, useSelector } from "react-redux";
-// import { logout } from './../store/user.slice';
-// import { useHistory } from 'react-router-dom';
-import { Link,useNavigate } from 'react-router-dom'
+import { NavLink,useNavigate } from 'react-router-dom'
 import Logo from './../assets/argentBankLogo.png'
 import { FaUserCircle, FaSignInAlt } from 'react-icons/fa';
 import { logout} from '../store/user.slice';
@@ -14,7 +12,7 @@ export default function HeaderPage() {
 
   const userFirstName = useSelector((state) => state.user.userFirstName); 
 
-    const handleLogout = () => {
+  const handleLogout = () => {
       localStorage.removeItem("token");
       dispatch(logout())
       navigate('/')
@@ -23,21 +21,20 @@ export default function HeaderPage() {
   return (
     <header>
         <nav className="main-nav">
-           <Link to='/' className="main-nav-logo">
+           <NavLink to='/' className="main-nav-logo">
                 <img src={Logo} className="main-nav-logo-image" alt="ArgentBank logo" />
                 <h1 className="sr-only">Argent Bank</h1>
-           </Link> 
+           </NavLink> 
            <div className='box_sign'>
-              <FaUserCircle />
                 {isAuthentificated ? 
-                 (<Link className="main-nav-item" to="/profile">{userFirstName}</Link>) :
-                 (<Link className="main-nav-item" to="/login" ><span>Sign In</span></Link>)
-                }
-                {isAuthentificated && 
-                (<button className="main-nav-item" href="#" onClick={handleLogout }>
-                 <FaSignInAlt/>
+                 (<><NavLink className="main-nav-item router-link-exact-active" to="/profile"><FaUserCircle className='nav-icon' />{userFirstName}</NavLink>
+                 <button className="main-nav-item btnLogout" href="#" onClick={handleLogout }>
+                 <FaSignInAlt className='nav-icon'/>
                   <span>Sign Out</span>
-                </button>)
+                </button></>) 
+                :
+                 (<NavLink className={({ isActive }) =>
+                 `main-nav-item ${isActive ? ' router-link-exact-active' : ''}`} to="/login"><FaUserCircle className='nav-icon' size="30px"/><span>Sign In</span></NavLink>)
                 }
             </div>
         </nav>

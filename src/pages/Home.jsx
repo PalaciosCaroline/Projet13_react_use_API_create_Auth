@@ -7,7 +7,6 @@ import {features} from '../data/dataFeatures'
 
 export default function Home() {
   
-
   return (
       <main className='main main_home'>
         <Banner />
