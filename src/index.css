@@ -62,7 +62,7 @@ body {
 .btnLogout{
   border: none;
   background-color: transparent;
-  font-size: 1rem;
+  /* font-size: 1.1rem; */
 }
 
 .main-nav-item:hover {
@@ -200,7 +200,6 @@ nav .nav-icon{
 
 .main_login{
   padding:20px 0 0 0; 
-  /* min-height: 80vh; */
   min-height: calc(100vh - 160px);
 }
 
@@ -316,11 +315,16 @@ nav .nav-icon{
 }
 
 .edit-button {
-  border-color: #00bc77;
+  border:none;
   background-color: #00bc77;
   color: #fff;
   font-weight: bold;
   padding: 10px;
+}
+
+.edit-button:hover{
+  background-color: #117e56;
+  box-shadow: 3px 3px 6px rgba(0,0,0,0.6);
 }
 
 .formProfile input{
@@ -377,8 +381,21 @@ nav .nav-icon{
 .btnSave{
   align-self: end;
 }
+
+.btnSave:hover{
+  background-color: #117e56;
+  color: #fff;
+  box-shadow: 3px 3px 6px rgba(0,0,0,0.6);
+}
+
 .btnCancel{
   align-self: start;
+}
+
+.btnCancel:hover{
+  background-color: #0e6948;
+  color: #fff;
+  box-shadow: 3px 3px 6px rgba(0,0,0,0.6);
 }
 
 .box_flexFormName  input::placeholder {
@@ -411,9 +428,14 @@ nav .nav-icon{
   font-size: 1.1rem;
   font-weight: bold;
   margin-top: 1rem;
-  border-color: #00bc77;
+  border: none;
   background-color: #00bc77;
   color: #fff;
+}
+
+.transaction-button:hover {
+  background-color: #117e56;
+  box-shadow: 3px 3px 6px rgba(0,0,0,0.6);
 }
 
 @media (min-width: 720px) {
@@ -497,7 +519,7 @@ nav .nav-icon{
 
 .box_transactions_page{
   padding: 30px;
-  background-color: #13da91;
+  background-color: #66e0b3;
 }
 
 .row_table{
@@ -506,7 +528,7 @@ nav .nav-icon{
 }
 
 .thead_transactions{
-  background-color: #13da91;
+  background-color: #66e0b3;
   border: none;
 }
 
@@ -524,10 +546,82 @@ th{
 
 .transactions_rest_infos{
   height: auto;
-  margin-left: 50px;
+  /* margin-left: 50px; */
   background-color: #fff;
 }
 
 .box_info{
   display: flex;
+}
+
+.line {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+  background-color: black;
+  display: none;
+}
+
+.td_bg{
+  background-color: #fff;
+}
+
+table .btn_icon{
+  border : none;
+  background-color: transparent;
+}
+
+table td{
+  height: 45px;
+}
+
+.btn_saveTransaction, .btn_cancelTransaction{
+  border : none;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+  width: 100px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.btn_saveTransaction{
+  background-color: #00bc77;
+}
+
+.btn_cancelTransaction{
+  background-color: #ed689e;
+}
+
+textarea{
+  width: 200px;
+  height: 5em;
+}
+
+@media (max-width: 600px) {
+  .main-nav-logo-image{
+    width: 160px;
+  }
+  .main-nav-item {
+    font-size: 0.9rem;
+  }
+
+  .box_transactions_page{
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
+.box_info p{
+  margin-top:10px;
+  margin-bottom:10px;
+  padding-left: 10px;
+}
+
+.td_date{
+  text-align: start;
+  padding-left: 10px;
 }

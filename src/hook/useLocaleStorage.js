@@ -18,11 +18,11 @@ export function useLocalStorageLogin(email, setEmail, password, setPassword, isA
   }, [setEmail, setPassword, setRememberMe]);
 
   const saveLoginToLocalStorage = (email, password) => {
-      const loginUser = { email, password };
-      localStorage.setItem(
-        "loginUser",
-        AES.encrypt(JSON.stringify(loginUser), KeyLogin).toString()
-      );
+    const loginUser = { email, password };
+    localStorage.setItem(
+      "loginUser",
+      AES.encrypt(JSON.stringify(loginUser), KeyLogin).toString()
+    );
   };
 
   useEffect(() => {
@@ -61,11 +61,11 @@ export function useLocalStorageToken(dispatch, token, setToken, setIsAuthentific
   
   useEffect(() => {
     if (token) {
-        localStorage.setItem(
-          "token",
-          AES.encrypt(JSON.stringify(token), KeyToken).toString()
-        );
-        }
+      localStorage.setItem(
+        "token",
+        AES.encrypt(JSON.stringify(token), KeyToken).toString()
+      );
+      }
   }, [token]);
 
   return
