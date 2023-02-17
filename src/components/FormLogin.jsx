@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import { useNavigate} from 'react-router-dom'
-import { setToken, setIsAuthentificated, setErrorLogin} from './../store/user.slice';
+import { setToken, setIsAuthentificated, setErrorLogin} from '../store/user.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import {login} from '../hook/login'
-import {useLocalStorageLogin, useLocalStorageToken} from './../hook/useLocaleStorage';
+import {useLocalStorageLogin, useLocalStorageToken} from '../hook/useLocaleStorage';
 
-export default function Form() {
+export default function FormLogin() {
   const dispatch = useDispatch();
   const navigate =  useNavigate();
   const token = useSelector((state) => state.user.token);

@@ -198,9 +198,19 @@ nav .nav-icon{
   margin-bottom: 0.5rem;
 }
 
-.main_login{
-  padding:20px 0 0 0; 
-  min-height: calc(100vh - 160px);
+main.main_login{
+  padding:48px 0 100px 0;  
+  flex: 1;
+  /* min-height: calc(100vh - 160px); */
+}
+
+.sign-in-content {
+  box-sizing: border-box;
+  background-color: white;
+  width: 295px;
+  margin: 0 auto;
+  /* margin-top: 3rem; */
+  padding: 2rem;
 }
 
 .sign-in-button {
@@ -215,21 +225,17 @@ nav .nav-icon{
   border: 1px solid  #00bc77;
 }
 
+.sign-in-button.noAlert:hover {
+  background-color: #117e56;
+  box-shadow: 3px 3px 6px rgba(0,0,0,0.6);
+}
+
 .redAlert {
   background-color: #eb5b22;
 }
 
 .noAlert{
   background-color: #00bc77;
-}
-
-.sign-in-content {
-  box-sizing: border-box;
-  background-color: white;
-  width: 300px;
-  margin: 0 auto;
-  margin-top: 3rem;
-  padding: 2rem;
 }
 
 .sign-in-icon {
@@ -257,8 +263,8 @@ nav .nav-icon{
 }
 
 .input-wrapper input {
-  padding: 5px;
-  font-size: 1.2rem;
+  padding: 4px;
+  font-size: 1.1rem;
 }
 
 .footer {

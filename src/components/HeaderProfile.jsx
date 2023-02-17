@@ -14,8 +14,6 @@ export default function HeaderProfile() {
   const [activeNameForm, setActiveNameForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorName, setErrorName] = useState('');
-  // const [errorFirstName, setErrorFirstName] = useState('');
-  // const [errorLastName, setErrorLastName] = useState('');
   const [error, setError] = useState("");
 
   const editNameForm = () => {
@@ -37,8 +35,6 @@ export default function HeaderProfile() {
   // const handleFocus = (event) => {
   //   event.target.value = '';
   // };
-
-  
 
   const handleFirstNameChange = handleNameChange(setErrorName, 'firstname', setFirstName);
   const handleLastNameChange = handleNameChange(setErrorName, 'lastname', setLastName);
