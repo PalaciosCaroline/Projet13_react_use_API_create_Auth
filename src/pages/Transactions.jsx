@@ -58,11 +58,11 @@ export default function Transactions() {
     }
 
     return (
-    <main>
-        <header>
-            <hr />
+    <main id='main_transaction'>
+          <hr />
+        <header className='header_transaction'>
             <p>{title}</p>
-            <h2>{amount}</h2>
+            <h2 className='h2_transaction'>{amount}</h2>
             <p>{text}</p>
         </header>
 
@@ -72,7 +72,7 @@ export default function Transactions() {
                     <thead className='thead_transactions'>
                         <tr>
                             <th className='th_thead_transactions'></th>
-                            <th className='th_thead_transactions'>Date</th>
+                            <th className='th_thead_transactions th_date'>Date</th>
                             <th className='th_thead_transactions'>Description</th>
                             <th className='th_thead_transactions'>Amount</th>
                             <th className='th_thead_transactions'>Balance</th>

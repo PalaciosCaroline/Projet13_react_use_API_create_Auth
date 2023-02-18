@@ -199,9 +199,9 @@ nav .nav-icon{
 }
 
 main.main_login{
-  padding:48px 0 100px 0;  
-  flex: 1;
-  /* min-height: calc(100vh - 160px); */
+  padding:48px 0 0 0;  
+ /* flex: 1;  */
+  min-height: calc(100vh - 160px);
 }
 
 .sign-in-content {
@@ -353,7 +353,7 @@ main.main_login{
 .errorInputName{
   position: absolute;
   top:-35px;
-  left: 35%;
+  left: 42%; 
 }
 
 #input_firstname.error{
@@ -410,6 +410,19 @@ main.main_login{
 }
 
 @media (max-width: 600px) {
+  #input_firstname{
+    margin-bottom:10px;
+  }
+
+  #input_lastname{
+    margin-bottom:10px;
+  }
+
+  .errorInputName{
+    left: 20%;
+    text-align: center;
+  }
+
   .box_form  {
       flex-direction: column;
       width: 90%;
@@ -524,7 +537,7 @@ main.main_login{
 } 
 
 .box_transactions_page{
-  padding: 30px;
+  padding: 80px;
   background-color: #66e0b3;
 }
 
@@ -630,4 +643,22 @@ textarea{
 .td_date{
   text-align: start;
   padding-left: 10px;
+}
+
+.th_date{
+  text-align: start;
+  padding-left: 30px;
+}
+
+.header_transaction{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.header_transaction p, .h2_transaction{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#main_transaction{
+  min-height: calc(100vh - 180px);
 }
