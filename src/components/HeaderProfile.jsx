@@ -13,13 +13,15 @@ export default function HeaderProfile() {
   const [lastName, setLastName] = useState(userLastName);
   const [activeNameForm, setActiveNameForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorName, setErrorName] = useState('');
+  const [errorFirstName, setErrorFirstName] = useState('');
+  const [errorLastName, setErrorLastName] = useState('');
   const [error, setError] = useState("");
 
   const editNameForm = () => {
     setFirstName(userFirstName)
     setLastName(userLastName)
-    setErrorName('')
+    setErrorFirstName('')
+    setErrorLastName('')
     setActiveNameForm(!activeNameForm)
   }
 
@@ -36,12 +38,12 @@ export default function HeaderProfile() {
   //   event.target.value = '';
   // };
 
-  const handleFirstNameChange = handleNameChange(setErrorName, 'firstname', setFirstName);
-  const handleLastNameChange = handleNameChange(setErrorName, 'lastname', setLastName);
+  const handleFirstNameChange = handleNameChange(setErrorFirstName, 'firstname', setFirstName);
+  const handleLastNameChange = handleNameChange(setErrorLastName, 'lastname', setLastName);
  
   const handleUpdateIdentityUser = async (e) => {
     e.preventDefault();
-    if(!controlLenghtName(setErrorName, firstName, 'firstname') || !controlLenghtName(setErrorName,lastName, 'lastname')) return;
+    if(!controlLenghtName(setErrorFirstName, firstName, 'firstname') || !controlLenghtName(setErrorLastName,lastName, 'lastname')) return;
     setIsLoading(true);
     setError(null);
     updateUserIdentity(setIsLoading,setError, token, firstName, lastName, dispatch) 
@@ -56,23 +58,26 @@ export default function HeaderProfile() {
         { activeNameForm ?
                     ( <div className="container_formName">
                         <form className='formProfile'  onSubmit={handleUpdateIdentityUser}>
-                        {errorName && <p className='errorInputName'>{errorName}</p>}
+                          <div className='box-error_input'>
+                            {errorFirstName && <p className='errorInputFirstName'>{errorFirstName}</p>}
                             <label htmlFor='firstname'></label>
                               <input id="input_firstname" type='text'
                                       // onFocus={handleFocus} 
                                       onChange={handleFirstNameChange} 
                                       value={firstName} 
-                                      // placeholder={userFirstName} 
+                                      placeholder={firstName ? '' : 'Fistname'}
                                 />
-
+                          </div>
+                          <div className='box-error_input'>
+                          {errorLastName && <p className='errorInputLastName'>{errorLastName}</p>}
                             <label htmlFor='name'></label>
                               <input id="input_lastname" type='text' 
                                     // onFocus={handleFocus} 
                                     onChange={handleLastNameChange} 
                                     value={lastName}
-                                    // placeholder={userLastName} 
+                                    placeholder={lastName ? '' : 'Lastname'}
                               />
-                            
+                             </div>
                             <div className='button_activeForm'> 
                                 <button  className='btnSave' disabled={isLoading}>Save</button>
                                 <button className='btnCancel' onClick={editNameForm} disabled={isLoading} >Cancel</button>

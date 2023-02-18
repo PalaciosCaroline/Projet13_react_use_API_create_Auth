@@ -350,10 +350,20 @@ main.main_login{
   position: relative;
 }
 
-.errorInputName{
+.errorInputFirstName{
   position: absolute;
-  top:-35px;
-  left: 42%; 
+  top: -35px;
+  left: 10px; 
+}
+.errorInputLastName{
+  position: absolute;
+  top: -35px;
+  left: 10px;  
+}
+
+.box-error_input{
+  display: inline-block;
+  position: relative;
 }
 
 #input_firstname.error{
@@ -411,7 +421,7 @@ main.main_login{
 
 @media (max-width: 600px) {
   #input_firstname{
-    margin-bottom:10px;
+    margin-bottom:20px;
   }
 
   #input_lastname{
@@ -487,7 +497,7 @@ main.main_login{
       margin: 8rem 0 1rem 0;
   }
 }
-@media (max-width: 550px) {
+@media (max-width: 600px) {
   .erreur_h1{
       font-size: 3rem;
   }
@@ -500,7 +510,7 @@ main.main_login{
       font-size: 1.5rem;
     }
   }
-  @media (max-width: 550px) {
+  @media (max-width: 600px) {
     .erreur_h2{
       font-size: 1.1rem;
     }
@@ -526,7 +536,7 @@ main.main_login{
     font-size: 1.2rem;
   }
 }
-@media (max-width: 550px) {
+@media (max-width: 600px) {
   .erreur_link{
     font-size: 0.9rem;
   }
@@ -662,3 +672,9 @@ textarea{
 #main_transaction{
   min-height: calc(100vh - 180px);
 }
+@media (max-width: 600px) {
+  .th_amount{
+    margin-left: 20px;
+  }
+}
+

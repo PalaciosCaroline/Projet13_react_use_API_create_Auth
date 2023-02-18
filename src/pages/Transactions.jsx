@@ -74,7 +74,7 @@ export default function Transactions() {
                             <th className='th_thead_transactions'></th>
                             <th className='th_thead_transactions th_date'>Date</th>
                             <th className='th_thead_transactions'>Description</th>
-                            <th className='th_thead_transactions'>Amount</th>
+                            <th className='th_thead_transactions th_amount'>Amount</th>
                             <th className='th_thead_transactions'>Balance</th>
                         </tr>
                     </thead>

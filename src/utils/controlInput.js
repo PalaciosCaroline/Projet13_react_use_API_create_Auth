@@ -15,7 +15,7 @@ export const handleNameChange = (setErrorName, name, setName) => event => {
 
 export const controlLenghtName  = (setErrorName, nameToControl, name) => {
     if (nameToControl.length <= 1) {
-        setErrorName(`The ${name} must contain at least 2 letters`);
+        setErrorName(`At least two letters are required`);
         document.getElementById(`input_${name}`).classList.add('error');
       return false;
     } else {
