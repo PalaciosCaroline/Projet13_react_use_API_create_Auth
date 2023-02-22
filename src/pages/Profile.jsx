@@ -10,16 +10,16 @@ export default function Profile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-  if (!isAuthentificated) {
-      navigate("/login");
-  }
+    if (!isAuthentificated) {
+        navigate("/login");
+    }
   }, [isAuthentificated, navigate])
 
 
   return (isAuthentificated &&
     <main className="main bg-dark main_profile">
       <HeaderProfile />
-      {dataAccount.map((item,index) =>         (<Account key={`account-${index}`} title={item.title} amount={item.amount} text={item.text} />)
+      {dataAccount.map((item,index) => (<Account key={`account-${index}`} title={item.title} amount={item.amount} text={item.text} />)
     )}
     </main>
   )
