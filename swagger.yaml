@@ -124,12 +124,9 @@ paths:
           schema:
             type: object
             properties:
-              action:
-                type: string
-                enum: [create, update, delete]
               category:
                 type: string
-              comment:
+              notes:
                 type: string
       responses:
         "200":
