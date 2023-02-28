@@ -24,3 +24,4 @@ export const controlLenghtName  = (setErrorName, nameToControl, name) => {
       return true;
     }
 }
+

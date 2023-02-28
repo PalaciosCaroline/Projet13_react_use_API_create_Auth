@@ -34,10 +34,6 @@ export default function HeaderProfile() {
     setLastName(userLastName)
   }, [userFirstName, userLastName])
 
-  // const handleFocus = (event) => {
-  //   event.target.value = '';
-  // };
-
   const handleFirstNameChange = handleNameChange(setErrorFirstName, 'firstname', setFirstName);
   const handleLastNameChange = handleNameChange(setErrorLastName, 'lastname', setLastName);
  
@@ -61,21 +57,19 @@ export default function HeaderProfile() {
                           <div className='box-error_input'>
                             {errorFirstName && <p className='errorInputFirstName'>{errorFirstName}</p>}
                             <label htmlFor='firstname'></label>
-                              <input id="input_firstname" type='text'
-                                      // onFocus={handleFocus} 
-                                      onChange={handleFirstNameChange} 
-                                      value={firstName} 
-                                      placeholder={firstName ? '' : 'Fistname'}
+                              <input id="input_firstname" type='text'                          
+                                onChange={handleFirstNameChange} 
+                                value={firstName} 
+                                placeholder={firstName ? '' : 'Fistname'}
                                 />
                           </div>
                           <div className='box-error_input'>
                           {errorLastName && <p className='errorInputLastName'>{errorLastName}</p>}
                             <label htmlFor='name'></label>
                               <input id="input_lastname" type='text' 
-                                    // onFocus={handleFocus} 
-                                    onChange={handleLastNameChange} 
-                                    value={lastName}
-                                    placeholder={lastName ? '' : 'Lastname'}
+                                onChange={handleLastNameChange} 
+                                value={lastName}
+                                placeholder={lastName ? '' : 'Lastname'}
                               />
                              </div>
                             <div className='button_activeForm'> 
@@ -87,7 +81,6 @@ export default function HeaderProfile() {
                     ) : (
                     <button className="edit-button" onClick={editNameForm}>Edit Name</button>
                     )}
-       
         <h2 className="sr-only">Accounts</h2>
     </header>
   )

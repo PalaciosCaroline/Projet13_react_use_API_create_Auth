@@ -22,7 +22,7 @@ export function useLocalStorageLogin(email, setEmail, password, setPassword, isA
     localStorage.setItem(
       "loginUser",
       AES.encrypt(JSON.stringify(loginUser), KeyLogin).toString()
-    );
+    )
   };
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export function useLocalStorageLogin(email, setEmail, password, setPassword, isA
   return {
     rememberMe,
     handleRememberMe,
-  };
+  }
 };
 
 export function useLocalStorageToken(dispatch, token, setToken, setisAuthenticated) {
@@ -70,3 +70,4 @@ export function useLocalStorageToken(dispatch, token, setToken, setisAuthenticat
 
   return
 }
+
