@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <main className='main main_home'>
-      <Banner />
+      <Banner data-testid="bannerbox"/>
       <section className="features">
         <h2 className="sr-only">Features</h2>
         {features.map((item,index) => 

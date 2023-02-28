@@ -7,8 +7,8 @@ function App() {
   document.title = 'Argent Bank - Home Page'
 
   return (
-    <div className="container_app" data-testid="containerApp">
-      <HeaderPage/>
+    <div className="container_app">
+      <HeaderPage/> 
       <Router />
       <Footer />
     </div>

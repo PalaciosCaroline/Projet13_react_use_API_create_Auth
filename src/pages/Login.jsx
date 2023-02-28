@@ -12,6 +12,6 @@ export default function Login() {
         <h1>Sign In</h1>
         <FormLogin />
       </section>
-  </main>
+    </main>
   )
 }
