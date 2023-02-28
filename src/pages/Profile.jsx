@@ -6,17 +6,18 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export default function Profile() {
-  const isAuthentificated = useSelector((state) => state.user.isAuthentificated);
+  document.title = 'Argent Bank - Profile Page'
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isAuthentificated) {
+    if (!isAuthenticated) {
         navigate("/login");
     }
-  }, [isAuthentificated, navigate])
+  }, [isAuthenticated, navigate])
 
 
-  return (isAuthentificated &&
+  return (isAuthenticated &&
     <main className="main bg-dark main_profile">
       <HeaderProfile />
       {dataAccount.map((item,index) => (<Account key={`account-${index}`} title={item.title} amount={item.amount} text={item.text} />)

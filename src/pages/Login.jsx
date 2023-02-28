@@ -3,7 +3,7 @@ import { FaUserCircle } from 'react-icons/fa';
 import FormLogin from '../components/FormLogin'
 
 export default function Login() {
-  document.title = 'Argent Bank - Home Page'
+  document.title = 'Argent Bank - Login Page'
 
   return (
     <main className="main bg-dark main_login">

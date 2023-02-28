@@ -4,7 +4,7 @@ import { AES, enc } from 'crypto-js';
 const KeyLogin = 'g5yFO1236Dxilp';
 const KeyToken = "groqIU25xdd";
 
-export function useLocalStorageLogin(email, setEmail, password, setPassword, isAuthentificated){
+export function useLocalStorageLogin(email, setEmail, password, setPassword, isAuthenticated){
   const [rememberMe, setRememberMe] = useState(false);
 
   const loadDataFromLocalStorage = useCallback(() => {
@@ -30,10 +30,10 @@ export function useLocalStorageLogin(email, setEmail, password, setPassword, isA
   }, [ loadDataFromLocalStorage]);
 
   useEffect(() => {
-    if (isAuthentificated && rememberMe) {
+    if (isAuthenticated && rememberMe) {
       saveLoginToLocalStorage(email, password);
     }
-  }, [isAuthentificated,rememberMe, email, password]);
+  }, [isAuthenticated,rememberMe, email, password]);
 
   const handleRememberMe = (event) => {
     setRememberMe(event.target.checked);
@@ -48,16 +48,16 @@ export function useLocalStorageLogin(email, setEmail, password, setPassword, isA
   };
 };
 
-export function useLocalStorageToken(dispatch, token, setToken, setIsAuthentificated) {
+export function useLocalStorageToken(dispatch, token, setToken, setisAuthenticated) {
 
   useEffect(() => {
     const encryptedToken = localStorage.getItem("token");
     if (encryptedToken) {
       const decryptedToken = JSON.parse(AES.decrypt(encryptedToken,KeyToken).toString(enc.Utf8));
       dispatch(setToken(decryptedToken));
-      dispatch(setIsAuthentificated(true));
+      dispatch(setisAuthenticated(true));
     }
-  }, [dispatch,setToken,setIsAuthentificated ]);
+  }, [dispatch,setToken,setisAuthenticated ]);
   
   useEffect(() => {
     if (token) {
@@ -65,7 +65,7 @@ export function useLocalStorageToken(dispatch, token, setToken, setIsAuthentific
         "token",
         AES.encrypt(JSON.stringify(token), KeyToken).toString()
       );
-      }
+    }
   }, [token]);
 
   return

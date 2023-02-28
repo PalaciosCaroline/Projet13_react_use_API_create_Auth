@@ -1,12 +1,11 @@
 import React from 'react'
-// import HeaderPage from '../components/HeaderPage'
 import Banner from '../components/Banner'
 import FeatureUser from '../components/FeatureUser'
-// import Footer from '../components/Footer'
 import {features} from '../data/dataFeatures'
 
 export default function Home() {
-  
+  document.title = 'Argent Bank - Home Page'
+
   return (
       <main className='main main_home'>
         <Banner />

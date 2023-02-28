@@ -1,11 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import { createAsyncThunk } from '@reduxjs/toolkit';
 
 const initialState = {
   token: null,
   userFirstName: '',
   userLastName: '',
-  isAuthentificated: false,
+  isAuthenticated: false,
   errorLogin: '',
   errorUpdateIdentity: '',
 };
@@ -23,14 +22,14 @@ const userSlice = createSlice({
     setUserLastName: (state, action) => {
       state.userLastName = action.payload;
     },
-    setIsAuthentificated: (state, action) => {
-      state.isAuthentificated = action.payload;
+    setisAuthenticated: (state, action) => {
+      state.isAuthenticated = action.payload;
     },
     logout: (state) => {
       state.token = null;
       state.userFirstName = '';
       state.userLastName = '';
-      state.isAuthentificated = false;
+      state.isAuthenticated = false;
     },
     setErrorLogin: (state, action) => {
       state.errorLogin = action.payload;
@@ -44,7 +43,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { setToken, setUserFirstName, setUserLastName, setIsAuthentificated, logout, setErrorLogin, setErrorUpdateIdentity, setIsLoadingLogin } = userSlice.actions;
+export const { setToken, setUserFirstName, setUserLastName, setisAuthenticated, logout, setErrorLogin, setErrorUpdateIdentity, setIsLoadingLogin } = userSlice.actions;
 
 export default userSlice.reducer;
 

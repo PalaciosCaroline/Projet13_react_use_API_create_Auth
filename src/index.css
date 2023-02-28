@@ -62,7 +62,6 @@ body {
 .btnLogout{
   border: none;
   background-color: transparent;
-  /* font-size: 1.1rem; */
 }
 
 .main-nav-item:hover {
@@ -81,7 +80,6 @@ body {
   width: 16px;
   height:16px; 
 }
-
 
 .main-nav-item {
   text-decoration: none;
@@ -109,7 +107,6 @@ nav .nav-icon{
   max-width: 100%;
   width: 200px;
 }
-
 
 .hero {
   background-image: url('./assets/bank-tree.jpeg');
@@ -209,7 +206,6 @@ main.main_login{
   background-color: white;
   width: 295px;
   margin: 0 auto;
-  /* margin-top: 3rem; */
   padding: 2rem;
 }
 
@@ -672,12 +668,12 @@ textarea{
 #main_transaction{
   min-height: calc(100vh - 180px);
 }
+
 @media (max-width: 600px) {
   .th_amount{
     margin-left: 20px;
   }
 }
-
 
 .main.main_profile{
   min-height: calc(100vh - 140px);

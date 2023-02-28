@@ -7,15 +7,14 @@ import { logout} from '../store/user.slice';
 export default function HeaderPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isAuthentificated = useSelector((state) => state.user.isAuthentificated);
-
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   const userFirstName = useSelector((state) => state.user.userFirstName); 
 
   const handleLogout = () => {
-      localStorage.removeItem("token");
-      dispatch(logout())
-      navigate('/')
-    }
+    localStorage.removeItem("token");
+    dispatch(logout())
+    navigate('/')
+  }
 
   return (
     <header>
@@ -25,9 +24,9 @@ export default function HeaderPage() {
                 <h1 className="sr-only">Argent Bank</h1>
            </NavLink> 
            <div className='box_sign'>
-                {isAuthentificated ? 
+                {isAuthenticated ? 
                  (<><NavLink className="main-nav-item router-link-exact-active" to="/profile"><FaUserCircle className='nav-icon' />{userFirstName}</NavLink>
-                 <button className="main-nav-item btnLogout" href="#" onClick={handleLogout }>
+                 <button className="main-nav-item btnLogout" onClick={handleLogout }>
                  <FaSignInAlt className='nav-icon'/>
                   <span>Sign Out</span>
                 </button></>) 

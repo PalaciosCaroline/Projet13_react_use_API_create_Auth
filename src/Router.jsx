@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -7,6 +7,7 @@ import Transactions from './pages/Transactions'
 import Erreur404 from './pages/Erreur404'
 
 export default function Router() {
+
   return (
     <Routes>
       <Route path="/" element={<Home />} />

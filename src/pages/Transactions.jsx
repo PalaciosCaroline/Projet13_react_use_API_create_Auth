@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export default function Transactions() {
+    document.title = 'Argent Bank - Transactions Page'
     const location = useLocation();
     const textareaRef = useRef(null);
     const params = new URLSearchParams(location.search);  
@@ -14,14 +15,14 @@ export default function Transactions() {
     const [linesVisible, setLinesVisible] = useState([]);
     const [editIndex, setEditIndex] = useState(null);
     const [editNoteIndex, setEditNoteIndex] = useState(null);
-    const isAuthentificated = useSelector((state) => state.user.isAuthentificated);
+    const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!isAuthentificated) {
+        if (!isAuthenticated) {
             navigate("/login");
         }
-    }, [isAuthentificated, navigate])
+    }, [isAuthenticated, navigate])
        
     function toggleLine(row) {
       const updatedLinesVisible = [...linesVisible];
