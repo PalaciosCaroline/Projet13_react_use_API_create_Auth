@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   token: null,
@@ -7,43 +7,51 @@ const initialState = {
   isAuthenticated: false,
   errorLogin: '',
   errorUpdateIdentity: '',
-};
+}
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
     setToken: (state, action) => {
-      state.token = action.payload;
+      state.token = action.payload
     },
     setUserFirstName: (state, action) => {
-      state.userFirstName = action.payload;
+      state.userFirstName = action.payload
     },
     setUserLastName: (state, action) => {
-      state.userLastName = action.payload;
+      state.userLastName = action.payload
     },
     setisAuthenticated: (state, action) => {
-      state.isAuthenticated = action.payload;
+      state.isAuthenticated = action.payload
     },
     logout: (state) => {
-      state.token = null;
-      state.userFirstName = '';
-      state.userLastName = '';
-      state.isAuthenticated = false;
+      state.token = null
+      state.userFirstName = ''
+      state.userLastName = ''
+      state.isAuthenticated = false
     },
     setErrorLogin: (state, action) => {
-      state.errorLogin = action.payload;
+      state.errorLogin = action.payload
     },
     setIsLoadingLogin: (state, action) => {
-      state.isloadingLogin = action.payload;
+      state.isloadingLogin = action.payload
     },
     setErrorUpdateIdentity: (state, action) => {
-      state.errorUpdateIdentity = action.payload;
+      state.errorUpdateIdentity = action.payload
     },
   },
-});
+})
 
-export const { setToken, setUserFirstName, setUserLastName, setisAuthenticated, logout, setErrorLogin, setErrorUpdateIdentity, setIsLoadingLogin } = userSlice.actions;
+export const {
+  setToken,
+  setUserFirstName,
+  setUserLastName,
+  setisAuthenticated,
+  logout,
+  setErrorLogin,
+  setErrorUpdateIdentity,
+  setIsLoadingLogin,
+} = userSlice.actions
 
-export default userSlice.reducer;
-
+export default userSlice.reducer

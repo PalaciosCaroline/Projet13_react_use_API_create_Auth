@@ -17,23 +17,31 @@ export default function HeaderPage() {
   }
 
   return (
-    <header>
+    <header >
         <nav className="main-nav">
            <NavLink to='/' className="main-nav-logo">
                 <img src={Logo} className="main-nav-logo-image" alt="ArgentBank logo" />
                 <h1 className="sr-only">Argent Bank</h1>
            </NavLink> 
            <div className='box_sign'>
-                {isAuthenticated ? 
-                 (<><NavLink className="main-nav-item router-link-exact-active" to="/profile"><FaUserCircle className='nav-icon' />{userFirstName}</NavLink>
-                 <button className="main-nav-item btnLogout" onClick={handleLogout }>
-                 <FaSignInAlt className='nav-icon'/>
+              {isAuthenticated ? 
+                (<>
+                <NavLink className="main-nav-item router-link-exact-active" to="/profile">
+                  <FaUserCircle className='nav-icon' />{userFirstName}
+                </NavLink>
+                <button className="main-nav-item btnLogout" onClick={handleLogout }>
+                  <FaSignInAlt className='nav-icon'/>
                   <span>Sign Out</span>
-                </button></>) 
-                :
-                 (<NavLink className={({ isActive }) =>
-                 `main-nav-item ${isActive ? ' router-link-exact-active' : ''}`} to="/login"><FaUserCircle className='nav-icon' size="30px"/><span>Sign In</span></NavLink>)
-                }
+                </button>
+              </>) 
+              :
+                (<NavLink className={({ isActive }) =>
+                  `main-nav-item ${isActive ? ' router-link-exact-active' : ''}`} 
+                  to="/login"><FaUserCircle 
+                  className='nav-icon' size="30px"/>
+                  <span>Sign In</span>
+                </NavLink>)
+              }
             </div>
         </nav>
     </header>

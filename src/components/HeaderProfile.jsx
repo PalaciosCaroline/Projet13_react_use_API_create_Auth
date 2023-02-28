@@ -50,38 +50,38 @@ export default function HeaderProfile() {
   
   return (
     <header className='header header_profile'>
-        <h1 className='h1_profile'>Welcome back<br /> { !activeNameForm ? <span>{userFirstName} {userLastName}!</span> : ''}</h1>
+        <h1 className='h1_profile'>Welcome back<br /> { !activeNameForm ? (<span>{userFirstName} {userLastName}!</span>) : ''}</h1>
         { activeNameForm ?
-                    ( <div className="container_formName">
-                        <form className='formProfile'  onSubmit={handleUpdateIdentityUser}>
-                          <div className='box-error_input'>
-                            {errorFirstName && <p className='errorInputFirstName'>{errorFirstName}</p>}
-                            <label htmlFor='firstname'></label>
-                              <input id="input_firstname" type='text'                          
-                                onChange={handleFirstNameChange} 
-                                value={firstName} 
-                                placeholder={firstName ? '' : 'Fistname'}
-                                />
-                          </div>
-                          <div className='box-error_input'>
-                          {errorLastName && <p className='errorInputLastName'>{errorLastName}</p>}
-                            <label htmlFor='name'></label>
-                              <input id="input_lastname" type='text' 
-                                onChange={handleLastNameChange} 
-                                value={lastName}
-                                placeholder={lastName ? '' : 'Lastname'}
-                              />
-                             </div>
-                            <div className='button_activeForm'> 
-                                <button  className='btnSave' disabled={isLoading}>Save</button>
-                                <button className='btnCancel' onClick={editNameForm} disabled={isLoading} >Cancel</button>
-                            </div> 
-                        </form>
-                      </div>
-                    ) : (
-                    <button className="edit-button" onClick={editNameForm}>Edit Name</button>
-                    )}
-        <h2 className="sr-only">Accounts</h2>
+        (<div className="container_formName">
+          <form className='formProfile'  onSubmit={handleUpdateIdentityUser}>
+            <div className='box-error_input'>
+              {errorFirstName && <p className='errorInputFirstName'>{errorFirstName}</p>}
+              <label htmlFor='firstname'></label>
+              <input id="input_firstname" type='text'                          
+                onChange={handleFirstNameChange} 
+                value={firstName} 
+                placeholder={firstName ? '' : 'Fistname'}
+              />
+            </div>
+            <div className='box-error_input'>
+              {errorLastName && <p className='errorInputLastName'>{errorLastName}</p>}
+              <label htmlFor='name'></label>
+              <input id="input_lastname" type='text' 
+                onChange={handleLastNameChange} 
+                value={lastName}
+                placeholder={lastName ? '' : 'Lastname'}
+              />
+            </div>
+            <div className='button_activeForm'> 
+                <button  className='btnSave' disabled={isLoading}>Save</button>
+                <button className='btnCancel' onClick={editNameForm} disabled={isLoading} >Cancel</button>
+            </div> 
+          </form>
+        </div>
+        ) : (
+        <button className="edit-button" onClick={editNameForm}>Edit Name</button>
+        )}
+      <h2 className="sr-only">Accounts</h2>
     </header>
   )
 }
