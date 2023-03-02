@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: Bank Argent API documentation
-  description: Contains all available API endpoints of functionality for transactions
+  description: Contains all available API endpoints of functionality for transactions, list of the current month, display one of them, and add, modify or delete information about a transaction
   version: '1.0.0'
   termsOfService: 'http://swagger.io/terms/'
 host: localhost:3001
@@ -16,7 +16,7 @@ paths:
       tags:
         - User Transactions Module
       summary: User Transactions
-      description: API to display the transactions list of the current month, display one of them, and add, modify or delete information about a transaction
+      description: API to display the transactions list of the current month
       parameters:
         - in: header
           name: Authorization
