@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: Bank Argent API documentation
-  description: Contains all available API endpoints of functionality for transactions, list of the current month, display one of them, and add, modify or delete information about a transaction
+  description: Contains all available API endpoints for transactions of a specific account of user, including displaying a list of the transactions of the current month, displaying a specific transaction, and adding, modifying, or deleting information about a transaction.
   version: '1.0.0'
   termsOfService: 'http://swagger.io/terms/'
 host: localhost:3000
@@ -9,20 +9,20 @@ basePath: /api/v1
 schemes:
   - http
 paths:
-  /user/transactions:
+  /user/{account_id}/transactions:
     get:
       security:
         - Bearer: []
       tags:
         - User Transactions Module
       summary: User Transactions
-      description: API to display the transactions list of the current month
+      description: API to display the transactions list of the current month for a specific account
       parameters:
-        - in: header
-          name: Authorization
-          description: Attach Bearer JWT token
+        - in: path
+          name: account_id
+          description: The ID of the account to retrieve transactions for
           required: true
-          type: string
+          type: integer
         - in: query
           name: month
           description: Month to retrieve transactions for (in YYYY-MM format)
@@ -35,6 +35,11 @@ paths:
           required: false
           type: string
           default: desc
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
       produces:
         - application/json
       responses:
@@ -57,7 +62,7 @@ paths:
         "500":
             description: Internal Server Error    
           
-  /user/transactions/{transactionId}:
+  /user/{account_id}/transactions/{transactionId}:
     get:
       security:
         - Bearer: []
@@ -66,6 +71,11 @@ paths:
       summary: User Single Transaction
       description: API to display one of transaction by Id in list of transactions
       parameters:
+        - in: path
+          name: account_id
+          description: The ID of the account to retrieve transactions for
+          required: true
+          type: integer
         - in: path
           name: transactionId
           description: ID of transaction to fetch
@@ -84,7 +94,7 @@ paths:
           schema:
             type: array
             items:
-                      $ref: "#/definitions/Transaction" 
+              $ref: "#/definitions/Transaction" 
         "400":
           description: Bad Request (the request parameters are invalid or missing)
         "401":
@@ -107,6 +117,11 @@ paths:
       description: API for creating, updating or deleting an information of a transaction by Id in the list of transactions of current month
       operationId: PatchTransactionInfos
       parameters:
+        - in: path
+          name: account_id
+          description: The ID of the account to retrieve transactions for
+          required: true
+          type: integer
         - in: path
           name: transactionId
           description: ID of transaction to fetch
