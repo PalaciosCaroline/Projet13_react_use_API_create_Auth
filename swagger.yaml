@@ -4,7 +4,7 @@ info:
   description: Contains all available API endpoints of functionality for transactions, list of the current month, display one of them, and add, modify or delete information about a transaction
   version: '1.0.0'
   termsOfService: 'http://swagger.io/terms/'
-host: localhost:3001
+host: localhost:3000
 basePath: /api/v1
 schemes:
   - http
