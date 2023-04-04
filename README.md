@@ -42,9 +42,9 @@ In the project directory, you can run:
 @@ Exemple: Image of site @@
 ```
 
-![site ArgentBank](./imgprojet7.png "site ArgentBank")
+![site ArgentBank](./argentbank_desktop2.png "site ArgentBank")
 
-![site ArgentBank](./imgprojet7_2.png "site ArgentBank")
+![site ArgentBank](./argentbank_login.png "site ArgentBank")
 
 
 ***********************************************************************************************************************************************************************
