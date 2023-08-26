@@ -1,4 +1,19 @@
+# Projet 13 ArgentBank
+
 # Utilisez une API pour un compte utilisateur bancaire avec React
+
+***<h1 align="center">Travail sur la connection sécurisée, le cryptage de données, le localstorage, l'appel à l'api, et le fichier de type swagger</h1>***
+
+<h2 align="center">Projet dans le cadre de la formation développeur d'application JavaScript React</h2> 
+
+
+---------------------------------------------------------------------------------------------------------
+
+```diff	
+@@ Travail sur la programmation en React @@
+```
+
+-------------------------------------------------------------
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -20,3 +35,16 @@ In the project directory, you can run:
 
 ### `npm start`
 
+
+***********************************************************************************************************************************************************************
+
+```diff	
+@@ Exemple: Image of site @@
+```
+
+![site ArgentBank](./argentbank_desktop2.png "site ArgentBank")
+
+![site ArgentBank](./argentbank_login.png "site ArgentBank")
+
+
+***********************************************************************************************************************************************************************
